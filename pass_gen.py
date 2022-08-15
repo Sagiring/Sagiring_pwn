@@ -1,7 +1,7 @@
 
 import random
 import string
-
+import argparse
 
 def evaluate_password(password,show_info=True):
         result = False
@@ -89,5 +89,15 @@ def main_genpassword():
             break
 
 def main():
-    print(f'新生成密码为:{creat_password(12,True)}')
+    # 命令符调用的说明与配置
+    parser = argparse.ArgumentParser(description='Generate new password.')
+    parser.add_argument('-l','--length',type=int, default=9,
+                        help='an integer for the length of password')
+    parser.add_argument('-c','--confuse',action='store_true',
+                        help='use confuse characters (I & l)')
+    args = parser.parse_args()
+
+    # print(f'confuse:{args.confuse}')
+    # print(args.length)
+    print(f'新生成密码为:{creat_password(args.length,args.confuse)}')
 main()
