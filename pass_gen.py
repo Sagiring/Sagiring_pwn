@@ -43,15 +43,15 @@ while 1:
         break
     else:
         prompt="Password is not in rule,"
-        if  password_state & 0b00001 == 0b00001:
+        if  password_state & 0b00001 == 0:
             prompt+='len is not enough,'
-        if  password_state & 0b10000 == 0b10000:
+        if  password_state & 0b10000 == 0:
             prompt+='no upper char,'
-        if  password_state & 0b01000 == 0b01000:
+        if  password_state & 0b01000 == 0:
             prompt+='no lower char,'
-        if  password_state & 0b00100 == 0b00100:
+        if  password_state & 0b00100 == 0:
             prompt+='no digit,'
-        if  password_state & 0b00010 == 0b00010:
+        if  password_state & 0b00010 == 0:
             prompt+='no puctuation,'
         prompt=prompt[:-1]
         prompt+='.'
