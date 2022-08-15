@@ -1,3 +1,4 @@
+from importlib.abc import ResourceLoader
 import random
 import string
 
@@ -45,6 +46,30 @@ def evaluate_password(password,show_info=True):
 
         return result
 
+def generate_password():
+    all_char_set = string.printable
+    all_char_set*=9
+
+    result=''.join(random.sample(all_char_set,k=9))
+    return result
+
+def creat_password(pass_length,confuse=False):
+    result=''
+    #TODO:生成包含各自字符
+    result+=random.choice(string.ascii_uppercase)
+    result+=random.choice(string.ascii_lowercase)
+    result+=random.choice(string.digits)
+    result+=random.choice(string.punctuation)
+    if confuse:
+        result+='Il'
+        result+=''.join(random.sample(string.printable[:-6]*pass_length,pass_length-6))
+    else:
+        result+=''.join(random.sample(string.printable[:-6]*pass_length,pass_length-4))
+    #TODO：生成指定长度的字符
+    
+    #TODO：随机打乱
+    random.sample(result,len(result))
+    return result
 
 def main_userinput():
     while 1:
@@ -55,24 +80,14 @@ def main_userinput():
             break
 
 
-def generate_password():
-    all_char_set = string.ascii_lowercase \
-    +string.ascii_uppercase \
-    +string.digits \
-    +string.punctuation
-    all_char_set*=9
 
-    result=''.join(random.sample(all_char_set,k=9))
-    return result
-
-
-def main():
+def main_genpassword():
     while 1:
         user_password = generate_password()
         if evaluate_password(user_password,show_info=False):
             print(f'新生成密码为:{user_password}')
             break
 
-
-
+def main():
+    print(f'新生成密码为:{creat_password(12,True)}')
 main()
