@@ -6,7 +6,7 @@ import argparse
 def evaluate_password(password,show_info=True):
         result = False
         password_state = 0b00000
-
+        # 0b表示二进制编码
         for char in password:
             if char.isupper():
                 password_state |=  0b10000
@@ -40,7 +40,9 @@ def evaluate_password(password,show_info=True):
                     prompt+='no digit,'
                 if  password_state & 0b00010 == 0:
                     prompt+='no puctuation,'
+                    # 运算符&符合布尔运算
                 prompt=prompt[:-1]
+                # 切片扣除最后一个字符，
                 prompt+='.'
                 print(prompt)
 
@@ -49,17 +51,21 @@ def evaluate_password(password,show_info=True):
 def generate_password():
     all_char_set = string.printable
     all_char_set*=9
-
+    # 字符串的乘除
     result=''.join(random.sample(all_char_set,k=9))
+    # ramdom.sample(选中的字符串，随机抽出的个数)
+    # ''.join将列表转换为字符串
     return result
 
 def creat_password(pass_length,confuse=False):
+    # 给一个值初始化的默认值
     result=''
     #TODO:生成包含各自字符
     result+=random.choice(string.ascii_uppercase)
     result+=random.choice(string.ascii_lowercase)
     result+=random.choice(string.digits)
     result+=random.choice(string.punctuation)
+    # choice选一个
     if confuse:
         result+='Il'
         result+=''.join(random.sample(string.printable[:-6]*pass_length,pass_length-6))
@@ -86,6 +92,7 @@ def main_genpassword():
         user_password = generate_password()
         if evaluate_password(user_password,show_info=False):
             print(f'新生成密码为:{user_password}')
+            # f'说明{变量}'非常好用！
             break
 
 def main():
