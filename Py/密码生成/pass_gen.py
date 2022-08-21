@@ -89,7 +89,7 @@ def main_genpassword():
             break
 
 def main():
-    # 命令符调用的说明与配置
+    # 命令符调用的说明
     parser = argparse.ArgumentParser(description='Generate new password.')
     parser.add_argument('-l','--length',type=int, default=9,
                         help='an integer for the length of password')
