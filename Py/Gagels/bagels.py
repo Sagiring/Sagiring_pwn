@@ -47,52 +47,51 @@ def print_user_time_list():
 
     with open('E:\Study\Py\Gagels\second_list.txt') as f:
             context = f.read()
-            print('---排行榜排名---')
-
+    print('--------排行榜排名--------')
+    user_list = []
+    user_text = context.split('\n')
+    for user_info in user_text[:-1]:
+        user_data = user_info.split(' ')
+        # print(user_data)
+        uid = user_data[1]
+        user_time = user_data[3]
         
-            user_list = []
-            user_text = context.split('\n')
-            for user_info in user_text[:-1]:
-                user_data = user_info.split(' ')
-                # print(user_data)
-                uid = user_data[1]
-                user_time = user_data[3]
-                
-                user_list.append([uid,int(user_time)])
-            user_list.sort(key= lambda x:x[1])
-            # 未弄懂的函数
-            # 整理排行榜数据
+        user_list.append([uid,int(user_time)])
+    user_list.sort(key= lambda x:x[1])
+    # 未弄懂的函数
+    # 整理排行榜数据
 
-            # 排行榜去重 待优化的代码
-            is_first = 1
+    # 排行榜去重 待优化的代码
+    is_first = 1
+    is_double = 0
+    is_exit = 0
+    for user_info in user_list:
+            if is_first:
+                    double_name = [[user_info[0],user_info[1]]]
+                    is_first = 0
+            
+            for cnt in range(0,len(double_name)):
+                    if user_info[0] in double_name[cnt]:
+                            is_double = 1
+                            # print(double_name)
+                            for i in range(0,len(double_name)):
+                                    if user_info[0] == double_name[i][0]:    
+                                            if user_info[1] < double_name[i][1]:
+                                                    double_name[i][1] = user_info[1]
+                                                    is_exit = 1
+                                                    break
+            if is_exit:
+                is_exit = 0
+                break                                        
+            
+            if not is_double:
+                    double_name.append([user_info[0],user_info[1]])
             is_double = 0
-            is_exit = 0
-            for user_info in user_list:
-                    if is_first:
-                            double_name = [[user_info[0],user_info[1]]]
-                            is_first = 0
-                    
-                    for cnt in range(0,len(double_name)):
-                            if user_info[0] in double_name[cnt]:
-                                    is_double = 1
-                                    # print(double_name)
-                                    for i in range(0,len(double_name)):
-                                            if user_info[0] == double_name[i][0]:    
-                                                    if user_info[1] < double_name[i][1]:
-                                                            double_name[i][1] = user_info[1]
-                                                            is_exit = 1
-                                                            break
-                    if is_exit:
-                        is_exit = 0
-                        break                                        
-                    
-                    if not is_double:
-                            double_name.append([user_info[0],user_info[1]])
-                    is_double = 0
 
-            for user_info in double_name:
-                print(f'player>{user_info[0]}---耗时>{user_info[1]}s')
-       
+    for user_info in double_name:
+        print(f'player>{user_info[0]}---耗时>{user_info[1]}s')
+    print('----------------')
+    
 def user_input(Num_Digits):
     while 1:
         guess = input('> ')
