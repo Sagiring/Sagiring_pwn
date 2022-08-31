@@ -75,7 +75,7 @@ def get_bilibili_hot():
         page +=1
         if page > 1:
             break
-    print(bilibili_data)
+    # print(bilibili_data[0])
     return bilibili_data
 
     

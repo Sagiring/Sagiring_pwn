@@ -2,6 +2,8 @@ from PIL import ImageGrab
 import time
 import win32gui
 import win32con
+import pyperclip
+import pyautogui
 
 WINDOW_TITLE = "微信" 
 
