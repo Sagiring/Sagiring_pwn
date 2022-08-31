@@ -39,7 +39,7 @@ def getwindow_position():
 def window_caputure(window_position):
     # print(window_position) 
 
-    wechat_begin_Px = window_position[0] * 1.5 + 380
+    wechat_begin_Px = window_position[0] * 1.5 + 450
     wechatd_begin_Py = window_position[1]* 1.5 + 420
 	#话泡最长度底部像素
     wechat_End_Px = wechat_begin_Px + 1340 - 650
@@ -85,7 +85,7 @@ def main():
         res = f'top1《{bilibili_c_immedietly.get_bilibili_hot()[0]}》\ntop2《{bilibili_c_immedietly.get_bilibili_hot()[1]}》\ntop3《{bilibili_c_immedietly.get_bilibili_hot()[2]}》\n'
         send_msg(window_position, res)
     elif news_msg == '晚安':
-        res = '祝君好梦!'
+        res = '好梦捏！'
         send_msg(window_position, res)
     else:
         res = ''
