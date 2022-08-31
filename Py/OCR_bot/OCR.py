@@ -2,8 +2,6 @@ from PIL import ImageGrab
 import time
 import win32gui
 import win32con
-import pyperclip
-import pyautogui
 
 WINDOW_TITLE = "微信" 
 
@@ -47,18 +45,12 @@ def window_caputure(window_position):
     pic_path = f'E:\Study\Py\OCR_bot\pic\pic.jpg'
     pic.save(pic_path)
 
+    
+
     # 窗体标题  用于定位窗体
 
 def main():
     window_position = getwindow_position()
     window_caputure(window_position)
-
-    
-    res = "send_msg"
-    pyperclip.copy( res )
-    pyautogui.click(window_position[0] + 650 ,window_position[1] + 650)
-    pyautogui.hotkey('ctrl','v')
-    pyautogui.click(window_position[0] + 1200 ,window_position[1] + 720)
-
 
 main()
