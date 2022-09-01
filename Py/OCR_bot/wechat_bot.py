@@ -100,6 +100,8 @@ def msg_creat(window_position):
         elif news_msg == 'bot关机':
             res = '正在关闭bot'
             exit = 1
+        elif '拍了拍我' in news_msg:
+            res = '我喜欢你~'
     else:
         print('Nothing found')
     # print(res)
@@ -120,7 +122,7 @@ def pic_md5(pic_path):
 def main():
     
     while 1:
-        time.sleep(3)
+        time.sleep(5)
         window_position = getwindow_position()
         is_new_msg = window_caputure_isnewmsg(window_position)
         # print(is_new_msg)
