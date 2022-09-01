@@ -13,6 +13,7 @@ import requests
 from requests.structures import CaseInsensitiveDict
 
 
+
 BAIDU_OCR_APP_ID = '27238006'
 BAIDU_OCR_API_KEY = 'ksVOt8Rw4CN3yrEEGpi0nOVx'
 BAIDU_OCR_SECRET_KEY = 'k2zv3nQOTjxKoc8XYa3GPGgOQK07GZIX'
@@ -95,8 +96,8 @@ def send_msg(window_position, res):
     pyautogui.click(window_position[0] + 1200 ,window_position[1] + 720)
 
 def msg_creat(window_position):
-    res =''
     exit = 0
+    res = ''
     ocr_data = ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
     # print(ocr_data)
     if ocr_data['words_result']:
@@ -104,33 +105,64 @@ def msg_creat(window_position):
         
         print(news_msg)
         
-        if news_msg == 'b站热搜':
-            res = bilibili_msg_creat()
-            res += '(发送 更新b站热搜 即可更新)'
-        if news_msg == '更新b站热搜':
-            get_bilibili_hot()
-            res = '已更新'
-        elif 'bot说' in news_msg:
-            if news_msg[4:]:
-                res = news_msg[4:]
-            else:
-                res = '要说什么捏？'
-        elif news_msg == '晚安':
-            res = '好梦捏！'
-        elif news_msg == 'bot关机':
-            res = '正在关闭bot'
-            exit = 1
-        elif '拍了拍我' in news_msg:
-            if '"Marln"拍了拍我' == news_msg:
-                res = '老子草尼玛'
-            else:
-                res = '我喜欢你~'
+        res, exit = langugage_functions(news_msg)
     else:
         print('Nothing found')
     # print(res)
     if res:
         send_msg(window_position, res)
     return exit
+
+def langugage_functions(news_msg):
+    exit = 0
+    res = ''
+    if news_msg == 'b站热搜':
+        res = bilibili_msg_creat()
+        res += '(发送 更新b站热搜 即可更新)'
+    elif news_msg == '更新b站热搜':
+        get_bilibili_hot()
+        res = '已更新'
+    elif news_msg == '微博热搜':
+        pass
+        res = 'bot在努力开发此功能~'
+    elif 'bot说' in news_msg:
+        if news_msg[4:]:
+            res = news_msg[4:]
+        else:
+            res = '要说什么捏？'
+    elif news_msg == 'bot关机':
+        res = '正在关闭bot'
+        exit = 1
+    elif '拍了拍我' in news_msg:
+        if '"Marln"拍了拍我' == news_msg:
+            res = '老子草尼玛'
+        else:
+            res = '我喜欢你~'
+    elif '问' in news_msg and '答' in news_msg:
+        write_msg_incsv(news_msg)
+        res ='我记住啦~'
+    elif '删除词条' in news_msg:
+        pass
+        res = 'bot在努力开发此功能~'
+    elif news_msg:
+        res = find_msg_incsv(news_msg)
+    return res,exit
+
+def write_msg_incsv(news_msg):
+    with open('E:\Study\Py\OCR_bot\human_language.csv','a+',encoding='utf-8',newline='') as f:
+        data=[news_msg[1:str.find(news_msg,'答')],news_msg[str.find(news_msg,'答') + 1:]]
+        csv_writer = csv.writer(f)
+        csv_writer.writerow(data)
+
+def find_msg_incsv(news_msg):
+    with open('E:\Study\Py\OCR_bot\human_language.csv','r',encoding='utf-8',newline='')as f:
+        res = ''
+        content = csv.reader(f)
+        for row in content:
+                    # print(row)
+            if row[0] == news_msg:
+                res = row[1]
+    return res
 
 def pic_md5(pic_path):
     with open(pic_path,'rb') as pic_hash:
@@ -237,7 +269,7 @@ def get_bilibili_hot():
 def main():
     
     while 1:
-        time.sleep(5)
+        
         window_position = getwindow_position()
         is_new_msg = window_caputure_isnewmsg_click(window_position)
         # print(is_new_msg)
@@ -252,6 +284,6 @@ def main():
                 print('已关机')
                 break
         
-
+        time.sleep(10)
 main()
 
