@@ -58,7 +58,7 @@ def window_caputure_isnewmsg_click(window_position):
     if pic_md5(pic_user_path)!=pic_md5(pic_user_hash_path):
          pyautogui.click(window_position[0] + 300 ,window_position[1] + 150)
          pic_user.save(pic_user_hash_path)
-        #  print("会话对象已更新")
+         print("会话对象已更新")
     else:
         pass
         # print("会话对象重复")
@@ -158,12 +158,12 @@ def main():
         window_position = getwindow_position()
         is_new_msg = window_caputure_isnewmsg_click(window_position)
         # print(is_new_msg)
-        # print('会话重复ing')
+        print('会话重复ing')
         
         
         if is_new_msg:
             is_new_msg = 0
-            # print('会话已更新')
+            print('会话已更新')
             exit = msg_creat(window_position)
             if exit:
                 print('已关机')
