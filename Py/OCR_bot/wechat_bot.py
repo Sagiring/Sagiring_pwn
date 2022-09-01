@@ -91,6 +91,7 @@ def msg_creat(window_position):
         
         if news_msg == 'b站热搜':
             res = bilibili_msg_creat()
+            res += '(发送 更新b站热搜 即可更新)'
         if news_msg == '更新b站热搜':
             bilibili_c_immedietly.get_bilibili_hot()
             res = '已更新'
