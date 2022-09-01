@@ -139,7 +139,6 @@ def pic_md5(pic_path):
             return data
 
 def bilibili_msg_creat(cnt = 3):
-    cnt = 3
     num = 0
     result_content = ''
     with open('E:\Study\Py\OCR_bot\\bilibili.csv','r',encoding='utf-8',newline='') as f:
