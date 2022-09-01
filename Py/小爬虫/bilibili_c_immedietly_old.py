@@ -1,7 +1,6 @@
 import requests
 from requests.structures import CaseInsensitiveDict
 import time
-import csv
 
 def get_bilibili_hot():
     page = 1
@@ -71,21 +70,13 @@ def get_bilibili_hot():
         # print(r.status_code)
         json_content = r.json()
         for item in json_content['data']['list']:
-            # print(item['short_link'])
-            bilibili_data.append((item['title'],item['pic'],item['short_link']))
-
-        
+            # print(item['title'])
+            bilibili_data.append(item['title'])
         page +=1
         if page > 1:
             break
-    # print(bilibili_data)
-
+    print(bilibili_data)
     return bilibili_data
 
     
-
-with open('E:\Study\Py\OCR_bot\\bilibili.csv','w',encoding='utf-8',newline='') as f:
-        csv_writer = csv.writer(f)
-        data = get_bilibili_hot()
-        csv_writer.writerows(data)
-       
+get_bilibili_hot()
