@@ -40,7 +40,7 @@ def getwindow_position():
     
     return (window_position)
 
-def window_caputure_isnewmsg(window_position):
+def window_caputure_isnewmsg_click(window_position):
     # print(window_position) 
     is_new_msg = 0
 
@@ -51,15 +51,27 @@ def window_caputure_isnewmsg(window_position):
     wechat_End_Py = wechatd_begin_Py + 100 - 30
 	# 截图保存,输入屏幕左上角和右下角的坐标
     # 450, 0, 1340,750
-    pic = ImageGrab.grab(bbox=(wechat_begin_Px, wechatd_begin_Py, wechat_End_Px, wechat_End_Py))
-# print(time.time())
-    pic_path = f'E:\Study\Py\OCR_bot\pic\pic.jpg'
-    pic.save(pic_path)
-    pic_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_hash.jpg'
-    
-    if pic_md5(pic_path)!=pic_md5(pic_hash_path):
+    pic_user = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 80, window_position[1]* 1.5 + 90,window_position[0] * 1.5 + 450,window_position[1]* 1.5 + 380))
+    pic_user_path = f'E:\Study\Py\OCR_bot\pic\pic_user.jpg'
+    pic_user_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_user_hash.jpg'
+    pic_user.save(pic_user_path)
+    if pic_md5(pic_user_path)!=pic_md5(pic_user_hash_path):
+         pyautogui.click(window_position[0] + 300 ,window_position[1] + 150)
+         pic_user.save(pic_user_hash_path)
+        #  print("会话对象已更新")
+    else:
+        pass
+        # print("会话对象重复")
+    # 更新窗口！
+
+    pic_msg = ImageGrab.grab(bbox=(wechat_begin_Px, wechatd_begin_Py, wechat_End_Px, wechat_End_Py))
+    pic_msg_path = f'E:\Study\Py\OCR_bot\pic\pic_msg.jpg'
+    pic_msg_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_msg_hash.jpg'
+    pic_msg.save(pic_msg_path)
+    if pic_md5(pic_msg_path)!=pic_md5(pic_msg_hash_path):
         is_new_msg = 1
-        pic.save(pic_hash_path)
+        pic_msg.save(pic_msg_hash_path)
+
     return is_new_msg
     # 窗体标题  用于定位窗体
 def get_file_content(filePath):
@@ -68,7 +80,7 @@ def get_file_content(filePath):
 
 def ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY):
     client = AipOcr(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
-    save_pic_path = "E:\Study\Py\OCR_bot\pic\pic.jpg"
+    save_pic_path = "E:\Study\Py\OCR_bot\pic\pic_msg.jpg"
     image = get_file_content(save_pic_path)
     ocr_result = client.basicGeneral(image);
     # print(ocr_result)
@@ -87,6 +99,7 @@ def msg_creat(window_position):
     # print(ocr_data)
     if ocr_data['words_result']:
         news_msg = ocr_data['words_result'][len(ocr_data['words_result'])-1]['words']
+        
         print(news_msg)
         
         if news_msg == 'b站热搜':
@@ -132,8 +145,8 @@ def bilibili_msg_creat(cnt = 3):
     with open('E:\Study\Py\OCR_bot\\bilibili.csv','r',encoding='utf-8',newline='') as f:
             content = csv.reader(f)
             for row in content:
-                    result_content += f'top->{num}{row[0]}->{row[2]}\n'
                     num += 1
+                    result_content += f'top->{num}{row[0]}->{row[2]}\n'
                     if num >= cnt:
                             break
     return result_content
@@ -143,14 +156,14 @@ def main():
     while 1:
         time.sleep(5)
         window_position = getwindow_position()
-        is_new_msg = window_caputure_isnewmsg(window_position)
+        is_new_msg = window_caputure_isnewmsg_click(window_position)
         # print(is_new_msg)
-        print('会话重复ing')
+        # print('会话重复ing')
         
         
         if is_new_msg:
             is_new_msg = 0
-            print('会话已更新')
+            # print('会话已更新')
             exit = msg_creat(window_position)
             if exit:
                 print('已关机')
