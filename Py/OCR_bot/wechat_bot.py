@@ -9,10 +9,9 @@ import hashlib
 import base64
 import hashlib
 import csv
-import requests
-from requests.structures import CaseInsensitiveDict
-
-
+import random
+from bilibili_hot import get_bilibili_hot
+from weibo_hot import weibo_get_hot
 
 BAIDU_OCR_APP_ID = '27238006'
 BAIDU_OCR_API_KEY = 'ksVOt8Rw4CN3yrEEGpi0nOVx'
@@ -47,11 +46,8 @@ def window_caputure_isnewmsg_click(window_position):
     # print(window_position) 
     is_new_msg = 0
 
-    wechat_begin_Px = window_position[0] * 1.5 + 460
-    wechatd_begin_Py = window_position[1]* 1.5 + 450
+
 	#话泡最长度底部像素
-    wechat_End_Px = wechat_begin_Px + 1340 - 550
-    wechat_End_Py = wechatd_begin_Py + 100 - 30
 	# 截图保存,输入屏幕左上角和右下角的坐标
     # 450, 0, 1340,750
     pic_user = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 80, window_position[1]* 1.5 + 90,window_position[0] * 1.5 + 450,window_position[1]* 1.5 + 380))
@@ -67,13 +63,16 @@ def window_caputure_isnewmsg_click(window_position):
         # print("会话对象重复")
     # 更新窗口！
 
-    pic_msg = ImageGrab.grab(bbox=(wechat_begin_Px, wechatd_begin_Py, wechat_End_Px, wechat_End_Py))
+    pic_msg = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 450, window_position[1]* 1.5 + 30,window_position[0] * 1.5 + 1300,window_position[1]* 1.5 + 550))
     pic_msg_path = f'E:\Study\Py\OCR_bot\pic\pic_msg.jpg'
     pic_msg_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_msg_hash.jpg'
     pic_msg.save(pic_msg_path)
     if pic_md5(pic_msg_path)!=pic_md5(pic_msg_hash_path):
         is_new_msg = 1
         pic_msg.save(pic_msg_hash_path)
+        pic_res = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 460, window_position[1]* 1.5 + 430,window_position[0] * 1.5 + 1050,window_position[1]* 1.5 + 520))
+        pic_res_path = f'E:\Study\Py\OCR_bot\pic\pic_res.jpg'
+        pic_res.save(pic_res_path)
 
     return is_new_msg
     # 窗体标题  用于定位窗体
@@ -82,11 +81,14 @@ def get_file_content(filePath):
 	        return fp.read()
 
 def ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY):
-    client = AipOcr(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
-    save_pic_path = "E:\Study\Py\OCR_bot\pic\pic_msg.jpg"
-    image = get_file_content(save_pic_path)
-    ocr_result = client.basicGeneral(image);
-    # print(ocr_result)
+    try:
+        client = AipOcr(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
+        save_pic_path = "E:\Study\Py\OCR_bot\pic\pic_res.jpg"
+        image = get_file_content(save_pic_path)
+        ocr_result = client.basicGeneral(image);
+        # print(ocr_result)
+    except:
+        ocr_result = ''
     return ocr_result
 
 def send_msg(window_position, res):
@@ -122,31 +124,57 @@ def langugage_functions(news_msg):
     elif news_msg == '更新b站热搜':
         get_bilibili_hot()
         res = '已更新'
+
     elif news_msg == '微博热搜':
-        pass
-        res = 'bot在努力开发此功能~'
+        res = weibo_msg_creat()
+        res += '(发送 更新微博热搜 即可更新)'
+    elif news_msg == '更新微博热搜':
+        weibo_get_hot()
+        res = '已更新'
+
     elif 'bot说' in news_msg:
         if news_msg[4:]:
             res = news_msg[4:]
         else:
             res = '要说什么捏？'
+
     elif news_msg == 'bot关机':
         res = '正在关闭bot'
         exit = 1
+
     elif '拍了拍我' in news_msg:
         if '"Marln"拍了拍我' == news_msg:
-            res = '老子草尼玛'
+            user = news_msg[1:-5]
+            res = f'@{user} 老子草尼玛'
         else:
-            res = '我喜欢你~'
+            user = news_msg[1:-5]
+            res = f'@{user} 我喜欢你~'
+
     elif '问' in news_msg and '答' in news_msg:
         write_msg_incsv(news_msg)
         res ='我记住啦~'
     elif '删除词条' in news_msg:
         pass
         res = 'bot在努力开发此功能~'
+
+    elif '-help' == news_msg:
+        path = 'E:\Study\Py\OCR_bot\\help.txt'
+        res = text_reader(path)
+
+    elif news_msg == 'bot今天吃什么':
+        path = 'E:\Study\Py\OCR_bot\\today_diet.txt'
+        with open(path,'r',encoding='utf-8',newline='')as f:
+            content = f.read().split('\n')
+            res = random.choice(content)
+            
     elif news_msg:
         res = find_msg_incsv(news_msg)
     return res,exit
+
+def text_reader(path):
+    with open(path,'r',encoding='utf-8',newline='')as f:
+        content = f.read()
+        return content 
 
 def write_msg_incsv(news_msg):
     with open('E:\Study\Py\OCR_bot\human_language.csv','a+',encoding='utf-8',newline='') as f:
@@ -173,107 +201,37 @@ def pic_md5(pic_path):
             return data
 
 def bilibili_msg_creat(cnt = 3):
-
     num = 0
     result_content = ''
     with open('E:\Study\Py\OCR_bot\\bilibili.csv','r',encoding='utf-8',newline='') as f:
             content = csv.reader(f)
             for row in content:
                     num += 1
-                    result_content += f'top->{num}{row[0]}->{row[2]}\n'
+                    result_content += f'top{num}->{row[0]}->{row[2]}\n'
                     if num >= cnt:
                             break
     return result_content
 
-def get_bilibili_hot():
-    page = 1
-    bilibili_data = []
-    while 1:
-        next_url = f'https://api.bilibili.com/x/web-interface/popular?ps=20&pn={page}'
-        headers = CaseInsensitiveDict()
-        # headers["User-Agent"] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
-
-        cookies = {
-        'buvid3': '19F99527-07B1-434F-852D-AD240DA95712148831infoc',
-        'LIVE_BUVID': 'AUTO4716261050593882',
-        'rpdid': '|(J|YmYulk~~0J\'uYkYuJJm|u',
-        'video_page_version': 'v_old_home',
-        'fingerprint_s': '9b0bccf4ec57734720e42828cf636185',
-        'i-wanna-go-back': '-1',
-        'buvid_fp_plain': 'undefined',
-        'buvid4': 'FA94223F-82CA-ACC9-D0BB-E38B02B4731991204-022012417-4HxpIjLfbKYv65KDSYmcdw%3D%3D',
-        'fingerprint3': '0111e39952fcd2d0e77176058d70888b',
-        'CURRENT_BLACKGAP': '0',
-        'hit-dyn-v2': '1',
-        'nostalgia_conf': '-1',
-        'CURRENT_QUALITY': '116',
-        'blackside_state': '0',
-        '_uuid': 'A99993BA-C72A-4106B-8344-C9D7109BCAFBF01405infoc',
-        'fingerprint': '0b5f8746827d7037afa0e55420fc4564',
-        'buvid_fp': '0b5f8746827d7037afa0e55420fc4564',
-        'DedeUserID': '23111878',
-        'DedeUserID__ckMd5': '0d9aed6047896e63',
-        'b_ut': '5',
-        'CURRENT_FNVAL': '4048',
-        'innersign': '0',
-        'SESSDATA': '92089377%2C1677495170%2Cf6a2f%2A81',
-        'bili_jct': 'e1f20d7b43ef9b44fc321addf4ed0b3f',
-        'sid': 'parqjy1w',
-        'b_lsid': 'DB9D9F6F_182F3DB085D',
-        'bp_video_offset_23111878': '700562458064978000',
-        'PVID': '3',
-    }
-
-        headers = {
-            'authority': 'api.bilibili.com',
-            'accept': '*/*',
-            'accept-language': 'zh-CN,zh;q=0.9',
-            # Requests sorts cookies= alphabetically
-            # 'cookie': 'buvid3=19F99527-07B1-434F-852D-AD240DA95712148831infoc; LIVE_BUVID=AUTO4716261050593882; rpdid=|(J|YmYulk~~0J\'uYkYuJJm|u; video_page_version=v_old_home; fingerprint_s=9b0bccf4ec57734720e42828cf636185; i-wanna-go-back=-1; buvid_fp_plain=undefined; buvid4=FA94223F-82CA-ACC9-D0BB-E38B02B4731991204-022012417-4HxpIjLfbKYv65KDSYmcdw%3D%3D; fingerprint3=0111e39952fcd2d0e77176058d70888b; CURRENT_BLACKGAP=0; hit-dyn-v2=1; nostalgia_conf=-1; CURRENT_QUALITY=116; blackside_state=0; _uuid=A99993BA-C72A-4106B-8344-C9D7109BCAFBF01405infoc; fingerprint=0b5f8746827d7037afa0e55420fc4564; buvid_fp=0b5f8746827d7037afa0e55420fc4564; DedeUserID=23111878; DedeUserID__ckMd5=0d9aed6047896e63; b_ut=5; CURRENT_FNVAL=4048; innersign=0; SESSDATA=92089377%2C1677495170%2Cf6a2f%2A81; bili_jct=e1f20d7b43ef9b44fc321addf4ed0b3f; sid=parqjy1w; b_lsid=DB9D9F6F_182F3DB085D; bp_video_offset_23111878=700562458064978000; PVID=3',
-            'origin': 'https://www.bilibili.com',
-            'referer': 'https://www.bilibili.com/',
-            'sec-ch-ua': '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36',
-        }
-
-
-
-        params = {
-            'ps': '20',
-            'pn': f'{page}',
-        }
-
-        time.sleep(1)
-        r = requests.get('https://api.bilibili.com/x/web-interface/popular', params=params, cookies=cookies, headers=headers)
-        # print(r.status_code)
-        json_content = r.json()
-        for item in json_content['data']['list']:
-            # print(item['short_link'])
-            bilibili_data.append((item['title'],item['pic'],item['short_link']))
-
-        
-        page +=1
-        if page > 1:
-            break
-    # print(bilibili_data)
-    with open('E:\Study\Py\OCR_bot\\bilibili.csv','w',encoding='utf-8',newline='') as f:
-        csv_writer = csv.writer(f)
-        data = get_bilibili_hot()
-        csv_writer.writerows(data)
+def weibo_msg_creat(cnt = 10):
+    num = 0
+    result_content = ''
+    with open('E:\Study\Py\OCR_bot\weibo_hot.csv','r',encoding='utf-8',newline='') as f:
+            content = csv.reader(f)
+            for row in content:
+                    num += 1
+                    result_content += f'top{num}->{row[0]}\n'
+                    if num >= cnt:
+                            break
+    return result_content
 
 def main():
-    
+
     while 1:
         
         window_position = getwindow_position()
         is_new_msg = window_caputure_isnewmsg_click(window_position)
         # print(is_new_msg)
-        print('会话重复ing')
+        print('监听ing')
         
         
         if is_new_msg:
@@ -285,5 +243,6 @@ def main():
                 break
         
         time.sleep(10)
+
 main()
 
