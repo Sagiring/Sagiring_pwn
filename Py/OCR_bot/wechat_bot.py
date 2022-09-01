@@ -80,8 +80,8 @@ def send_msg(window_position, res):
     pyautogui.click(window_position[0] + 1200 ,window_position[1] + 720)
 
 def msg_creat(window_position):
-    res =' '
-    exit = '0'
+    res =''
+    exit = 0
     ocr_data = ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
     # print(ocr_data)
     if ocr_data['words_result']:
@@ -98,7 +98,7 @@ def msg_creat(window_position):
         elif news_msg == '晚安':
             res = '好梦捏！'
         elif news_msg == 'bot关机':
-            res = '正在关闭bot ing'
+            res = '正在关闭bot'
             exit = 1
     else:
         print('Nothing found')
@@ -132,6 +132,7 @@ def main():
             print('会话已更新')
             exit = msg_creat(window_position)
             if exit:
+                print('已关机')
                 break
         
 
