@@ -9,6 +9,7 @@ import bilibili_c_immedietly
 import hashlib
 import base64
 import hashlib
+import csv
 
 BAIDU_OCR_APP_ID = '27238006'
 BAIDU_OCR_API_KEY = 'ksVOt8Rw4CN3yrEEGpi0nOVx'
@@ -89,7 +90,10 @@ def msg_creat(window_position):
         print(news_msg)
         
         if news_msg == 'b站热搜':
-            res = f'top1《{bilibili_c_immedietly.get_bilibili_hot()[0]}》\ntop2《{bilibili_c_immedietly.get_bilibili_hot()[1]}》\ntop3《{bilibili_c_immedietly.get_bilibili_hot()[2]}》\n'
+            res = bilibili_msg_creat()
+        if news_msg == '更新b站热搜':
+            bilibili_c_immedietly.get_bilibili_hot()
+            res = '已更新'
         elif 'bot说' in news_msg:
             if news_msg[4:]:
                 res = news_msg[4:]
@@ -101,7 +105,10 @@ def msg_creat(window_position):
             res = '正在关闭bot'
             exit = 1
         elif '拍了拍我' in news_msg:
-            res = '我喜欢你~'
+            if '"Marln"拍了拍我' == news_msg:
+                res = '老子草尼玛'
+            else:
+                res = '我喜欢你~'
     else:
         print('Nothing found')
     # print(res)
@@ -117,7 +124,18 @@ def pic_md5(pic_path):
             data = hashlib.md5(base64_data).hexdigest()
             return data
 
-
+def bilibili_msg_creat(cnt = 3):
+    cnt = 3
+    num = 0
+    result_content = ''
+    with open('E:\Study\Py\OCR_bot\\bilibili.csv','r',encoding='utf-8',newline='') as f:
+            content = csv.reader(f)
+            for row in content:
+                    result_content += f'top->{num}{row[0]}->{row[2]}\n'
+                    num += 1
+                    if num >= cnt:
+                            break
+    return result_content
 
 def main():
     
@@ -139,4 +157,5 @@ def main():
         
 
 main()
+
 
