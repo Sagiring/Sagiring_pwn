@@ -46,7 +46,7 @@ def window_caputure_isnewmsg(window_position):
     wechat_begin_Px = window_position[0] * 1.5 + 460
     wechatd_begin_Py = window_position[1]* 1.5 + 450
 	#话泡最长度底部像素
-    wechat_End_Px = wechat_begin_Px + 1340 - 660
+    wechat_End_Px = wechat_begin_Px + 1340 - 550
     wechat_End_Py = wechatd_begin_Py + 100 - 30
 	# 截图保存,输入屏幕左上角和右下角的坐标
     # 450, 0, 1340,750
@@ -80,12 +80,14 @@ def send_msg(window_position, res):
     pyautogui.click(window_position[0] + 1200 ,window_position[1] + 720)
 
 def msg_creat(window_position):
+    res =' '
+    exit = '0'
     ocr_data = ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY)
     # print(ocr_data)
     if ocr_data['words_result']:
         news_msg = ocr_data['words_result'][len(ocr_data['words_result'])-1]['words']
         print(news_msg)
-        res=''
+        
         if news_msg == 'b站热搜':
             res = f'top1《{bilibili_c_immedietly.get_bilibili_hot()[0]}》\ntop2《{bilibili_c_immedietly.get_bilibili_hot()[1]}》\ntop3《{bilibili_c_immedietly.get_bilibili_hot()[2]}》\n'
         elif 'bot说' in news_msg:
@@ -95,11 +97,15 @@ def msg_creat(window_position):
                 res = '要说什么捏？'
         elif news_msg == '晚安':
             res = '好梦捏！'
+        elif news_msg == 'bot关机':
+            res = '正在关闭bot ing'
+            exit = 1
     else:
         print('Nothing found')
     # print(res)
     if res:
         send_msg(window_position, res)
+    return exit
 
 def pic_md5(pic_path):
     with open(pic_path,'rb') as pic_hash:
@@ -117,13 +123,17 @@ def main():
         time.sleep(3)
         window_position = getwindow_position()
         is_new_msg = window_caputure_isnewmsg(window_position)
-        print(is_new_msg)
+        # print(is_new_msg)
+        print('会话重复ing')
         
         
         if is_new_msg:
             is_new_msg = 0
-            msg_creat(window_position)
-            
+            print('会话已更新')
+            exit = msg_creat(window_position)
+            if exit:
+                break
+        
 
 main()
 
