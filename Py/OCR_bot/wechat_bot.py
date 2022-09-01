@@ -85,18 +85,21 @@ def msg_creat(window_position):
     if ocr_data['words_result']:
         news_msg = ocr_data['words_result'][len(ocr_data['words_result'])-1]['words']
         print(news_msg)
-    
+        res=''
         if news_msg == 'b站热搜':
             res = f'top1《{bilibili_c_immedietly.get_bilibili_hot()[0]}》\ntop2《{bilibili_c_immedietly.get_bilibili_hot()[1]}》\ntop3《{bilibili_c_immedietly.get_bilibili_hot()[2]}》\n'
-            send_msg(window_position, res)
+        elif 'bot说' in news_msg:
+            if news_msg[4:]:
+                res = news_msg[4:]
+            else:
+                res = '要说什么捏？'
         elif news_msg == '晚安':
             res = '好梦捏！'
-            send_msg(window_position, res)
-        else:
-            res = ''
     else:
         print('Nothing found')
     # print(res)
+    if res:
+        send_msg(window_position, res)
 
 def pic_md5(pic_path):
     with open(pic_path,'rb') as pic_hash:
