@@ -118,16 +118,22 @@ def msg_creat(window_position):
 def langugage_functions(news_msg):
     exit = 0
     res = ''
-    if news_msg == 'b站热搜':
-        res = bilibili_msg_creat()
-        res += '(发送 更新b站热搜 即可更新)'
+    if ('b站热搜' in news_msg and news_msg[4:].isdigit()) or news_msg == 'b站热搜':
+        if news_msg[4:].isdigit():
+            res = bilibili_msg_creat(int(news_msg[4:]))
+        else:
+            res = bilibili_msg_creat()
+        res += '(后跟数字指定显示列数)'
     elif news_msg == '更新b站热搜':
         get_bilibili_hot()
         res = '已更新'
 
-    elif news_msg == '微博热搜':
-        res = weibo_msg_creat()
-        res += '(发送 更新微博热搜 即可更新)'
+    elif ('微博热搜' in news_msg and news_msg[4:].isdigit()) or news_msg == '微博热搜':
+        if news_msg[4:].isdigit():
+            res = weibo_msg_creat(int(news_msg[4:]))
+        else:
+            res = weibo_msg_creat()
+        res += '(后跟数字指定显示列数)'
     elif news_msg == '更新微博热搜':
         weibo_get_hot()
         res = '已更新'
