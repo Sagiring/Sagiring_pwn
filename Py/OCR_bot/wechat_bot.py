@@ -1,3 +1,4 @@
+from site import USER_BASE
 from PIL import ImageGrab
 import time
 import win32gui
@@ -17,6 +18,14 @@ BAIDU_OCR_APP_ID = '27238006'
 BAIDU_OCR_API_KEY = 'ksVOt8Rw4CN3yrEEGpi0nOVx'
 BAIDU_OCR_SECRET_KEY = 'k2zv3nQOTjxKoc8XYa3GPGgOQK07GZIX'
 WINDOW_TITLE = "微信" 
+PIC_USER = [80 , 90 ,450 ,380]
+PIC_MSG = [450, 30 ,1300,550]
+PIC_RES = [460, 430 ,1050, 520]
+CLICK_USER = [300,150]
+CLICK_MSG = [650,650]
+CLICK_SEND = [1200,720]
+
+
 
 def getwindow_position():
     window_hwnd = win32gui.FindWindow(None, WINDOW_TITLE)
@@ -45,17 +54,18 @@ def getwindow_position():
 def window_caputure_isnewmsg_click(window_position):
     # print(window_position) 
     is_new_msg = 0
+    # list(window_position)
 
-
+    #缩放比例
 	#话泡最长度底部像素
 	# 截图保存,输入屏幕左上角和右下角的坐标
     # 450, 0, 1340,750
-    pic_user = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 80, window_position[1]* 1.5 + 90,window_position[0] * 1.5 + 450,window_position[1]* 1.5 + 380))
+    pic_user = ImageGrab.grab(bbox=(window_position[0]*  + PIC_USER[0], window_position[1] + PIC_USER[1],window_position[0]  + PIC_USER[2],window_position[1] + PIC_USER[3]))
     pic_user_path = f'E:\Study\Py\OCR_bot\pic\pic_user.jpg'
     pic_user_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_user_hash.jpg'
     pic_user.save(pic_user_path)
     if pic_md5(pic_user_path)!=pic_md5(pic_user_hash_path):
-         pyautogui.click(window_position[0] + 300 ,window_position[1] + 150)
+         pyautogui.click(window_position[0] + CLICK_USER[0] ,window_position[1] + CLICK_USER[1])
          pic_user.save(pic_user_hash_path)
          print("会话对象已更新")
     else:
@@ -63,14 +73,14 @@ def window_caputure_isnewmsg_click(window_position):
         # print("会话对象重复")
     # 更新窗口！
 
-    pic_msg = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 450, window_position[1]* 1.5 + 30,window_position[0] * 1.5 + 1300,window_position[1]* 1.5 + 550))
+    pic_msg = ImageGrab.grab(bbox=(window_position[0]  + PIC_MSG[0], window_position[1] + PIC_MSG[1],window_position[0]  + PIC_MSG[2],window_position[1] + PIC_MSG[3]))
     pic_msg_path = f'E:\Study\Py\OCR_bot\pic\pic_msg.jpg'
     pic_msg_hash_path = f'E:\Study\Py\OCR_bot\pic\pic_msg_hash.jpg'
     pic_msg.save(pic_msg_path)
     if pic_md5(pic_msg_path)!=pic_md5(pic_msg_hash_path):
         is_new_msg = 1
         pic_msg.save(pic_msg_hash_path)
-        pic_res = ImageGrab.grab(bbox=(window_position[0] * 1.5 + 460, window_position[1]* 1.5 + 430,window_position[0] * 1.5 + 1050,window_position[1]* 1.5 + 520))
+        pic_res = ImageGrab.grab(bbox=(window_position[0]  + PIC_RES[0], window_position[1] + PIC_RES[1],window_position[0]  + PIC_RES[2],window_position[1] + PIC_RES[3]))
         pic_res_path = f'E:\Study\Py\OCR_bot\pic\pic_res.jpg'
         pic_res.save(pic_res_path)
 
@@ -93,9 +103,9 @@ def ocr_data_get(BAIDU_OCR_APP_ID, BAIDU_OCR_API_KEY, BAIDU_OCR_SECRET_KEY):
 
 def send_msg(window_position, res):
     pyperclip.copy( res )
-    pyautogui.click(window_position[0] + 650 ,window_position[1] + 650)
+    pyautogui.click(window_position[0] + CLICK_MSG[0] ,window_position[1] + CLICK_MSG[1])
     pyautogui.hotkey('ctrl','v')
-    pyautogui.click(window_position[0] + 1200 ,window_position[1] + 720)
+    pyautogui.click(window_position[0] + CLICK_SEND[0] ,window_position[1] + CLICK_SEND[1])
 
 def msg_creat(window_position):
     exit = 0
@@ -144,9 +154,9 @@ def langugage_functions(news_msg):
         else:
             res = '要说什么捏？'
 
-    elif news_msg == 'bot关机':
-        res = '正在关闭bot'
-        exit = 1
+    # elif news_msg == 'bot关机':
+    #     res = '正在关闭bot'
+    #     exit = 1
 
     elif '拍了拍我' in news_msg:
         if '"Marln"拍了拍我' == news_msg:
