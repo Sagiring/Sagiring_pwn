@@ -15,7 +15,7 @@ public class clock {
     }
 
     public static void main(String[] args) {
-        clock Clock = new clock();
-        Clock.start();
+        clock Clock_test = new clock();
+        Clock_test.start();
     }
 }
