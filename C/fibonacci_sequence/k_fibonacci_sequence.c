@@ -52,8 +52,8 @@ int k_fibonacci_sequence(int k, int m)
 }
 int main()
 {
-    int k = 3;
-    int m = 5;
+    int k = 25;
+    int m = 26;
     int result = k_fibonacci_sequence(k, m);
     printf("result = %d", result);
     return 0;
