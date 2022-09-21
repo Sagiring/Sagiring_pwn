@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class note_book {
     private ArrayList<String> notes = new ArrayList<String>();
+    // list来咯
 
     public void add(String s) {
         notes.add(s);
