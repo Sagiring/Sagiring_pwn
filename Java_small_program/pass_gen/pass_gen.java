@@ -8,6 +8,8 @@ public class pass_gen {
         int password_state = 0b00000;
         // TODO:password_judge
         for (char i : password.toCharArray()) {
+            // String 转 char[]\
+            // 判断各种字符
             if (Character.isUpperCase(i)) {
                 password_state |= 0b10000;
             } else if (Character.isLowerCase(i)) {
@@ -29,6 +31,7 @@ public class pass_gen {
             if (show_info) {
                 String prompt = new String();
                 prompt = "Password is not in rule,";
+                // 打括号保证运算？Java特性
                 if ((password_state & 0b00001) == 0) {
                     prompt += "len is not enough,";
                 }
@@ -42,6 +45,9 @@ public class pass_gen {
                     prompt += "no puctuation,";
                 }
                 prompt = prompt.substring(0, prompt.length()-1);
+                // 
+                // 字符串切片！！！！！
+                // 
                 prompt += ".";
                 System.out.println(prompt);
             }
