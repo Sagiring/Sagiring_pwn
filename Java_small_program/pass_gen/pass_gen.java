@@ -6,7 +6,7 @@ public class pass_gen {
     public Boolean evaluate_password(String password, Boolean show_info) {
         Boolean result = false;
         int password_state = 0b00000;
-        // TODO:password_judge
+        // finish:password_judge
         for (char i : password.toCharArray()) {
             // String 转 char[]\
             // 判断各种字符
@@ -55,8 +55,11 @@ public class pass_gen {
         return result;
     }
 
-    public int generate_password() {
-        int result = 0;
+    public String generate_password() {
+        String result = "0";
+        String all_char_set = new String();
+        all_char_set = "0123456789";
+        result = all_char_set;
         return result;
     }
 
