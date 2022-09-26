@@ -26,7 +26,7 @@ void table_sort(va a)
 void table_delete(va a, int aloc)
 {
 
-    if (aloc + 1 < a.length)
+    if (aloc < a.length)
     {
         a.elem[aloc] = -1;
     }
@@ -38,7 +38,7 @@ void table_intersection(va a, va b)
     int bloc = 0;
     while (1)
     {
-        if (aloc == a.length - 1)
+        if (aloc == a.length )
         {
             break;
         }
@@ -72,13 +72,13 @@ void table_intersection(va a, va b)
 int main()
 {
     va a;
-    a.length = 6;
+    a.length = 11;
     a.elem = (int *)malloc(sizeof(int) * a.length);
     for (int i = 0; i < a.length; i++)
     {
         a.elem[i] = i + 1;
     }
-    printf("a= ");
+    printf("a = ");
     for (int i = 0; i < a.length; i++)
     {
         printf("%d ", a.elem[i]);
@@ -86,7 +86,7 @@ int main()
     printf("\n");
     // a[] = {1,2,3,4,5,6}
     va b;
-    b.length = 5;
+    b.length = 10;
     b.elem = (int *)malloc(sizeof(int) * a.length);
     for (int i = 0; i < b.length; i++)
     {
