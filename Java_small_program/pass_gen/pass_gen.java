@@ -117,10 +117,11 @@ public class pass_gen {
         pass_gen string = new pass_gen();
         result += string.string_type_out("uppercase");
         return result;
+        // #TODO
     }
 
     public static void main(String[] args) {
-        // main_userinput();
+        main_userinput();
         main_auto_password();
     }
 

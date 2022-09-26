@@ -45,17 +45,7 @@ int table_insert(va va, int x)
     return -1;
 }
 
-int table_equal(va a, int x)
-{
-    for (int i = 0; i < a.length; i++)
-    {
-        if (a.elem[i] == x)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
+
 
 int main()
 {
