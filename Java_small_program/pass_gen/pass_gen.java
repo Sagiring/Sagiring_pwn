@@ -116,8 +116,10 @@ public class pass_gen {
         String result = "";
         pass_gen string = new pass_gen();
         result += string.string_type_out("uppercase");
+        Random r = new Random();
+        r.nextInt(result.length());
         return result;
-        // #TODO
+        
     }
 
     public static void main(String[] args) {
