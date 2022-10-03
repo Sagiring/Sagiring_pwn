@@ -78,31 +78,6 @@ void print_list(link *head)
     printf("%d.\n", tem->elem);
 }
 
-link *delete_loc_list(link *head, int loc)
-{
-    if (loc == 1)
-    {
-        link *tem = NULL;
-        tem = head->next;
-        head->next = head->next->next;
-        free(tem);
-        return head;
-    }
-    else
-    {
-        link *tem = NULL;
-        link *elem = head->next;
-        for (int i = 1; i < loc - 1; i++)
-        {
-            elem = elem->next;
-        }
-        tem = elem->next;
-        elem->next = elem->next->next;
-        free(tem);
-        return elem;
-    }
-}
-
 int find_elem(link *head, int loc)
 {
     if (loc == 1)
