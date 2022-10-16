@@ -1,13 +1,18 @@
 #include <stdio.h>
-int main (){
-    float a=11.28125;
-    char *p =(char *)&a ;
-    
 
-    for(int i=0;i<8;i++){
-printf("%x ",*(char *)(p+i));
+char buf[80];
+void vulnerable() {
+    int len = -100;
+    
+    if (len > 80) {
+        printf("length too large: bad dog, no cookie for you!");
+        return;
     }
-    
-    
+    printf("Yes");
+    // memcpy(buf, p, len);
+}
+
+int main (){
+vulnerable();
 return 0;
 }

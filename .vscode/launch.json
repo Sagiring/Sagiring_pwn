@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch python_tuple",
+            "request": "launch",
+            "mainClass": "Python_tuple.python_tuple",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
             "name": "Launch pass_gen",
             "request": "launch",
             "mainClass": "pass_gen.pass_gen",
