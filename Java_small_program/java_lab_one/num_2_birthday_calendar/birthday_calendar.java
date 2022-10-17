@@ -1,4 +1,4 @@
-package java_lab_one.num_2;
+package java_lab_one.num_2_birthday_calendar;
 import java.util.Calendar;
 import java.util.Scanner;
 public class birthday_calendar {
@@ -38,7 +38,7 @@ public class birthday_calendar {
                 System.out.print("  ");
             }
             if (i == Integer.parseInt(date[2])) {
-                System.out.print("\b"+i + "*");
+                System.out.print(i + "*");
             } else {
                 System.out.print(i);
             }
@@ -56,18 +56,18 @@ public class birthday_calendar {
     public void print_all_rate(String[] rate_date) {
         String week[] = { "一", "二", "三", "四", "五", "六", "日" };
         Calendar c1 = Calendar.getInstance();
-        c1.set(Integer.parseInt(rate_date[0]), Integer.parseInt(rate_date[1]) - 1, 1);
+        c1.set(Integer.parseInt(rate_date[0]), Integer.parseInt(rate_date[1]) - 1,Integer.parseInt(rate_date[2]) );
         float sum = 0;
         int[] week_num_sum = new int[7];
 
         for (int i = 0; Integer.parseInt(rate_date[0]) + i < 2022; i++) {
-            c1.set(Integer.parseInt(rate_date[0]) + i, Integer.parseInt(rate_date[1]) - 1, 1);
+            c1.set(Integer.parseInt(rate_date[0]) + i, Integer.parseInt(rate_date[1]) - 1, Integer.parseInt(rate_date[2]) );
             int week_fin = c1.get(Calendar.DAY_OF_WEEK) - 1;
             week_num_sum[week_fin] += 1;
             sum++;
         }
         for (int i = 0; i < 7; i++) {
-            System.out.println("星期" + week[i] + ":" + String.format("%.2f",week_num_sum[i] / sum));
+            System.out.println("星期" + week[i] + ":" + String.format("%.3f",week_num_sum[i] / sum));
         }
     }
 
@@ -83,10 +83,11 @@ public class birthday_calendar {
         String[] rate_date = user_input.split(" ");
         Calendar c1 = Calendar.getInstance();
         while (Integer.parseInt(date[0]) < 2022) {
-            date[0] = (Integer.parseInt(date[0]) + 1) + "";
+            
             c1.set(Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1, 1);
             bir.print_week(date);
             bir.print_date(date);
+            date[0] = (Integer.parseInt(date[0]) + 1) + "";
         }
         // System.out.println(week[c1.get(Calendar.DAY_OF_WEEK)-1]);
         bir.print_all_rate(rate_date);

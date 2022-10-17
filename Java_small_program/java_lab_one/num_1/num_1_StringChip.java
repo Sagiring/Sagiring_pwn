@@ -23,8 +23,8 @@ public class num_1_StringChip {
 
         }
         result = user_input.substring(loc);
-        result = result.substring(0, 1).toUpperCase() + result.substring(1, result.length() - 1) + ", ";
-        user_input = user_input.substring(0, loc);
+        result = result.substring(0, 1).toUpperCase() + result.substring(1, result.length() - 1) + ",";
+        user_input = user_input.substring(0, loc-1);
         user_input = user_input.substring(0, 1).toLowerCase() + user_input.substring(1);
         result += user_input + '?';
         System.out.println(result);
