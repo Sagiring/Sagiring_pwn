@@ -1,4 +1,4 @@
-package like_py.Python_dic;
+package Python_dic;
 
 import java.util.HashMap;
 import java.util.Scanner;
