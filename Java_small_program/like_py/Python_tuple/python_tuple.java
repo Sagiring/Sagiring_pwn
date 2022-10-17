@@ -1,4 +1,4 @@
-package Python_tuple;
+package python_tuple;
 
 import java.util.HashSet;
 

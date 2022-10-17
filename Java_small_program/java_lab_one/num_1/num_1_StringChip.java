@@ -1,3 +1,4 @@
+package java_lab_one.num_1;
 import java.util.Scanner;
 
 public class num_1_StringChip {
@@ -7,7 +8,6 @@ public class num_1_StringChip {
         Scanner in = new Scanner(System.in);
         user_input = in.nextLine();
         in.close();
-
 
         int cnt = 0;
         int loc = 0;

@@ -1,4 +1,4 @@
-package Py_chip;
+package py_chip;
 
 public class string_chip {
     public static void main(String[] args) {
