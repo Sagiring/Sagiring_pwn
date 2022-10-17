@@ -82,7 +82,7 @@ public class birthday_calendar {
         // split!!
         String[] rate_date = user_input.split(" ");
         Calendar c1 = Calendar.getInstance();
-        for (int i = 0; Integer.parseInt(date[0]) < 2022; i++) {
+        while (Integer.parseInt(date[0]) < 2022) {
             date[0] = (Integer.parseInt(date[0]) + 1) + "";
             c1.set(Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1, 1);
             bir.print_week(date);
