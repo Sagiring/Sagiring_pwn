@@ -1,4 +1,4 @@
-package java_lab_one.num_2_birthday_calendar;
+
 import java.util.Calendar;
 import java.util.Scanner;
 public class birthday_calendar {

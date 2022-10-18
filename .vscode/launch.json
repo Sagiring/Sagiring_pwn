@@ -6,94 +6,38 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch num_1_StringChip",
+            "name": "Launch my_time",
             "request": "launch",
-            "mainClass": "java_lab_one.num_1.num_1_StringChip",
+            "mainClass": "homework_10_17.time_class.my_time",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
+            "name": "Launch time_my",
+            "request": "launch",
+            "mainClass": "homework_10_17.time_class.time_my",
             "projectName": "Study_Sagiring_51777ba8"
         },
         {
             "type": "java",
             "name": "Launch birthday_calendar",
             "request": "launch",
-            "mainClass": "java_lab_one.num_2_birthday_calendar.birthday_calendar",
+            "mainClass": "birthday_calendar",
             "projectName": "Study_Sagiring_51777ba8"
         },
         {
             "type": "java",
-            "name": "Launch Library",
+            "name": "Launch string_chip",
             "request": "launch",
-            "mainClass": "java_lab_one.num3.Library",
+            "mainClass": "py_chip.string_chip",
             "projectName": "Study_Sagiring_51777ba8"
         },
         {
             "type": "java",
-            "name": "Launch Book",
+            "name": "Launch time",
             "request": "launch",
-            "mainClass": "java_lab_one.num3.Book",
+            "mainClass": "homework_10_17.time_class.time",
             "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch Java_any",
-            "request": "launch",
-            "mainClass": "Java_any.Java_any",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch birthday_calendar",
-            "request": "launch",
-            "mainClass": "java_lab_one.num_2.birthday_calendar",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch num_2",
-            "request": "launch",
-            "mainClass": "java_lab_one.num_2.num_2",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch num_1",
-            "request": "launch",
-            "mainClass": "num_1",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch python_tuple",
-            "request": "launch",
-            "mainClass": "Python_tuple.python_tuple",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch pass_gen",
-            "request": "launch",
-            "mainClass": "pass_gen.pass_gen",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch Java_any",
-            "request": "launch",
-            "mainClass": "Java_any.Java_any",
-            "projectName": "Study_50d667af"
-        },
-        {
-            "type": "java",
-            "name": "Launch Hexadecimal_binary",
-            "request": "launch",
-            "mainClass": "homework_9_21.Hexadecimal_binary",
-            "projectName": "Study_50d667af"
-        },
-        {
-            "type": "java",
-            "name": "Launch pass_gen",
-            "request": "launch",
-            "mainClass": "pass_gen.pass_gen",
-            "projectName": "Study_50d667af"
         },
         {
             "type": "java",
