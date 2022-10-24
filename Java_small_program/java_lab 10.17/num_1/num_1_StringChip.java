@@ -1,4 +1,4 @@
-package java_lab_one.num_1;
+package num_1;
 import java.util.Scanner;
 
 public class num_1_StringChip {

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch birthday_calendar",
+            "request": "launch",
+            "mainClass": "num_2_birthday_calendar.birthday_calendar",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
+            "name": "Launch num_1_StringChip",
+            "request": "launch",
+            "mainClass": "num_1_StringChip",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
             "name": "Launch my_time",
             "request": "launch",
             "mainClass": "homework_10_17.time_class.my_time",

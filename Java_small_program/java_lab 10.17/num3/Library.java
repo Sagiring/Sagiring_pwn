@@ -1,4 +1,4 @@
-package java_lab_one.num3;
+package num3;
 
 import java.util.ArrayList;
 
