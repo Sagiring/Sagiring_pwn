@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch human",
+            "request": "launch",
+            "mainClass": "homework_11_1.homework.human",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
             "name": "Launch birthday_calendar",
             "request": "launch",
             "mainClass": "num_2_birthday_calendar.birthday_calendar",
