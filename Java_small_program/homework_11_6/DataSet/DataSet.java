@@ -1,5 +1,8 @@
 package DataSet;
- public class DataSet
+
+import Human.human;
+
+public class DataSet
  {
    private double sum;
    private double maximum;
@@ -18,8 +21,9 @@ package DataSet;
        Adds a data value to the data set
        @param x a data value
     */
-    public void add(double x)
+    public void add(human p)
     {
+      double x = p.getdata();
        sum = sum + x;
        if (count == 0 || maximum < x) maximum = x;
        count++;
@@ -43,7 +47,5 @@ package DataSet;
     {
        return maximum;
     }
- 
- 
  }
 

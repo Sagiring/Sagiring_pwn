@@ -1,5 +1,4 @@
 package high_data;
-
-public class height {
-    
+public interface height {
+ public double getdata();
 }

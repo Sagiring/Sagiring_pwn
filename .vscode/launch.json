@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch test_main",
+            "request": "launch",
+            "mainClass": "DataSet.test_main",
+            "projectName": "Study_Sagiring_51777ba8"
+        },
+        {
+            "type": "java",
             "name": "Launch human",
             "request": "launch",
             "mainClass": "homework_11_1.homework.human",
