@@ -1,6 +1,4 @@
- /**
-    Computes the average of a set of data values.
- */
+package DataSet;
  public class DataSet
  {
    private double sum;

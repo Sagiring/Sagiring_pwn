@@ -1,4 +1,4 @@
-package homework_10_17.time_class;
+package time_class;
 
 import java.util.Calendar;
 
