@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "Enabled",
+    "java.project.outputPath": "Java_small_program\\Class",
+    "java.dependency.packagePresentation": "flat",
+    "files.associations": {
+        "chrono": "c",
+        "algorithm": "c"
+    }
+}
