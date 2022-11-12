@@ -5,5 +5,6 @@
     "files.associations": {
         "chrono": "c",
         "algorithm": "c"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }
