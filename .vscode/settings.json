@@ -6,5 +6,10 @@
         "chrono": "c",
         "algorithm": "c"
     },
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "java.format.settings.url": "eclipse-formatter.xml",
+    "java.project.sourcePaths": [
+        "Java_small_program",
+        "Java"
+    ]
 }

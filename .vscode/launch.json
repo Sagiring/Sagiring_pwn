@@ -6,69 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch test_main",
-            "request": "launch",
-            "mainClass": "DataSet.test_main",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch human",
-            "request": "launch",
-            "mainClass": "homework_11_1.homework.human",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch birthday_calendar",
-            "request": "launch",
-            "mainClass": "num_2_birthday_calendar.birthday_calendar",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch num_1_StringChip",
-            "request": "launch",
-            "mainClass": "num_1_StringChip",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch my_time",
-            "request": "launch",
-            "mainClass": "homework_10_17.time_class.my_time",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch time_my",
-            "request": "launch",
-            "mainClass": "homework_10_17.time_class.time_my",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch birthday_calendar",
-            "request": "launch",
-            "mainClass": "birthday_calendar",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch string_chip",
-            "request": "launch",
-            "mainClass": "py_chip.string_chip",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
-            "name": "Launch time",
-            "request": "launch",
-            "mainClass": "homework_10_17.time_class.time",
-            "projectName": "Study_Sagiring_51777ba8"
-        },
-        {
-            "type": "java",
             "name": "Java.exe",
             "request": "launch",
             "mainClass": "${file}",
