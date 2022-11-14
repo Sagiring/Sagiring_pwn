@@ -78,14 +78,14 @@ public class Pet implements Comparable<Pet>{
       if(owner_is == 0 && name_is == 0){
          return 0;
       }else if(owner_is > 0){
-         return -1;
-      }else if(owner_is < 0){
          return 1;
+      }else if(owner_is < 0){
+         return -1;
       }else{
          if (name_is > 0) {
-            return -1;
-         }else{
             return 1;
+         }else{
+            return -1;
          }
        
       }

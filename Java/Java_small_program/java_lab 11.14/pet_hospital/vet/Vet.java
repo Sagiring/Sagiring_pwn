@@ -48,7 +48,7 @@ public class Vet implements Database {
    * on the screen. (See sample output for exact format.)
    */
   public void display() {
-    System.out.println("Vet "+vet_name+" clients list:");
+    System.out.println("Vet "+vet_name+" client list:");
     for (int i = 0; i < client_num; i++) {
       System.out.println(clients[i]);
     }
@@ -66,7 +66,7 @@ public class Vet implements Database {
     if (o instanceof Pet) {
       client_num++;
       clients[client_num - 1] = (Pet) o;
-      sort();
+     
       return true;
     }
     return false;
@@ -89,7 +89,6 @@ public class Vet implements Database {
           }
           clients[client_num-1] = null;
           client_num--;
-          sort();
           return to_delete;
         }
       }
