@@ -3,7 +3,6 @@ from pwn import p32
 import socket
 
 context(arch='i386')
-context.terminal = ['tmux', 'splitw', '-h']
 r = process("./split")
 
 addr_system = 0x804a018
