@@ -5,7 +5,10 @@ import socket
 from ctypes import *
 # log_level = 'debug'
 context(arch='amd64',os = 'linux', log_level='DEBUG')
-context.terminal = ['wt.exe']
+
+context.terminal = ["wt.exe", "nt" ,"bash" ,"-c"]
+# context.terminal = ['tmux', 'splitw', '-h']
+# context.terminal = ['bash']
 
 # host = "node.yuzhian.com.cn"
 # ip = socket.gethostbyname(host)
