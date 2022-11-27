@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch round",
+            "request": "launch",
+            "mainClass": "round.round",
+            "projectName": "Java_664fc49"
+        },
+        {
+            "type": "java",
             "name": "Launch P3main",
             "request": "launch",
             "mainClass": "P3main",
@@ -24,16 +31,13 @@
                 "skipSynthetics": false,
                 "skipStaticInitializers": false,
                 "skipConstructors": false
-            },
-            
-            
-            
+            }
         },
-        {      
-        "type": "java",
-        "name": "Jav_more.exe",
-        "request": "launch",
-        "mainClass": "${file}",
-}
+        {
+            "type": "java",
+            "name": "Jav_more.exe",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
     ]
 }

