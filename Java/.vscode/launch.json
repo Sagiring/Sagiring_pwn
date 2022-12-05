@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch round_plus",
+            "request": "launch",
+            "mainClass": "round_plus.round_plus",
+            "projectName": "Java_664fc49"
+        },
+        {
+            "type": "java",
             "name": "Launch round",
             "request": "launch",
             "mainClass": "round.round",
