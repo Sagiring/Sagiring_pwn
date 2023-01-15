@@ -8,10 +8,10 @@ context(arch='amd64',os = 'linux')
 context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
 host = "week-1.hgame.lwsec.cn"
 ip = socket.gethostbyname(host)
-r = remote(ip,31896)#远程连接
+# r = remote(ip,31896)#远程连接
 # elf = cdll.LoadLibrary('libc.so.6')
 # elf = ELF('./pwn')
-# r = process("./vuln")
+r = process("./vuln")
 # gdb.attach(r)
 # pause()
 backdoor_addr = 0x401176
