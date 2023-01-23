@@ -3,7 +3,7 @@ from pwn import *
 context(arch='amd64',os = 'linux')
 context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
 # r = process("./vuln")
-r = connect('week-1.hgame.lwsec.cn',31579)#远程连接
+r = connect('week-1.hgame.lwsec.cn',32417)#远程连接
 libc = ELF("./libc-2.31.so")
 elf = ELF("./vuln")
 
