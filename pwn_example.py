@@ -19,8 +19,8 @@ if gdb_is:
     pause()
     pass
 
-# elf = cdll.LoadLibrary('libc.so.6')
-# elf = ELF('./pwn')
+libc = ELF('./libc-2.31.so')
+elf = ELF('./vuln')
 
 # r.sendlineafter()
 # r.send()
