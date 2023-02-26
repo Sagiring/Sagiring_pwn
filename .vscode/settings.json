@@ -1,3 +1,6 @@
 {
-    "python.analysis.typeCheckingMode": "off"
+    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.extraPaths": [
+        "./BUUCTF/ciscn_2019_c_1/LibcSearcher"
+    ]
 }
