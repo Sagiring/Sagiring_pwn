@@ -2,7 +2,7 @@ from pwn import *
 from pwn import p32
 
 
-debug = 1
+debug = 0
 gdb_is = 1
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
