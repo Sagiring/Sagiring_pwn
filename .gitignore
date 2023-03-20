@@ -1,0 +1,31 @@
+semter one/test/test.sln
+semter one/test/.vs/test/v16/.suo
+semter one/test/.vs/test/v16/Browse.VC.db
+semter one/test/.vs/test/v16/ipch/AutoPCH/f0f3bd82bb665e12/源.ipch
+semter one/test/Debug/test.exe
+semter one/test/Debug/test.pdb
+semter one/test/test/源.c
+semter one/test/test/test.vcxproj
+semter one/test/test/test.vcxproj.filters
+semter one/test/test/test.vcxproj.user
+semter one/test/test/Debug/源.obj
+semter one/test/test/Debug/test.exe.recipe
+semter one/test/test/Debug/test.ilk
+semter one/test/test/Debug/test.log
+semter one/test/test/Debug/vc142.idb
+semter one/test/test/Debug/vc142.pdb
+semter one/test/test/Debug/test.tlog/CL.command.1.tlog
+semter one/test/test/Debug/test.tlog/CL.read.1.tlog
+semter one/test/test/Debug/test.tlog/CL.write.1.tlog
+semter one/test/test/Debug/test.tlog/link.command.1.tlog
+semter one/test/test/Debug/test.tlog/link.read.1.tlog
+semter one/test/test/Debug/test.tlog/link.write.1.tlog
+semter one/test/test/Debug/test.tlog/test.lastbuildstate
+My_pwn/radare2
+C++
+Python\Py_small_program\OCR_bot\.venv
+Python\Py_small_program\OCR_bot\__pycache__
+Python\wechat_bot\__pycache__
+Python\wechat_bot\.venv
+Python\wechat_bot\build\bot_main
+Python\wechat_bot\dist

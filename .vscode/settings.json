@@ -1,6 +1,17 @@
 {
-    "python.analysis.typeCheckingMode": "off",
-    "python.analysis.extraPaths": [
-        "./BUUCTF/ciscn_2019_c_1/LibcSearcher"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "java.project.outputPath": "Java_small_program\\Class",
+    "java.dependency.packagePresentation": "flat",
+    "files.associations": {
+        "chrono": "c",
+        "algorithm": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c"
+    },
+    "git.ignoreLimitWarning": true,
+    "java.format.settings.url": "eclipse-formatter.xml",
+    "java.project.sourcePaths": [
+        "Java"
     ]
 }

