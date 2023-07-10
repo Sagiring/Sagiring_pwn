@@ -6,7 +6,8 @@ debug = 1
 gdb_is = 1
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64', os='linux', log_level='DEBUG')
-
+elf = ELF('./vuln')
+libc = ELF('./libc-2.31.so')
 if debug:
     context.terminal = [
         '/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe', 'nt', 'Ubuntu', '-c']
@@ -17,8 +18,7 @@ else:
     gdb_is = 0
 
 
-elf = ELF('./vuln')
-libc = ELF('./libc-2.31.so')
+
 
 if gdb_is:
     gdb.attach(r, 'b* 0x4012bf')
