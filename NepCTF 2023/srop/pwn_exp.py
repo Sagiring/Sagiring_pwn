@@ -2,17 +2,16 @@ from pwn import *
 from pwn import p64,u64
 
 
-debug = 1
-gdb_is = 1
+debug = 0
+gdb_is = 0 
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
     r = process("./pwn")
-    
 else:
     host = "nepctf.1cepeak.cn"
-    r = connect(host,32552)#远程连接
+    r = connect(host,30885)#远程连接
     gdb_is =0
 
 if gdb_is:

