@@ -8,16 +8,16 @@ gdb_is = 0
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
-    r = process("./pwn")
+    if not gdb_is:
+        r = process("./shellcode_level3")
     
 else:
-    host = "192.168.0.111:19787"
+    host = "192.168.0.111:62338"
     r = connect(host.split(':')[0],host.split(':')[1])#远程连接
     gdb_is =0
 
 if gdb_is:
-    # gdb.attach(r,'b* 0x00401571')
-    gdb.attach(r)
+    r = gdb.debug("./shellcode_level3",'b main')
     pause()
     pass
 
