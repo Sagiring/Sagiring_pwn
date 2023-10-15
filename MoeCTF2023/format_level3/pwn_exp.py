@@ -1,8 +1,8 @@
 from pwn import * 
 
 context(arch='i386',os = 'linux', log_level='DEBUG')
-debug = 0
-gdb_is = 0
+debug = 1
+gdb_is = 1
 # context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
     context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
