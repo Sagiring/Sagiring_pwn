@@ -13,7 +13,7 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64",
-            "compilerPath": "E:\\MinGW-w64\\mingw64\\bin\\gcc"
+            "compilerPath": "C:\\Program Files (x86)\\MinGW\\mingw64\\bin\\gcc"
         }
     ],
     "version": 4
