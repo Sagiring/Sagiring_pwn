@@ -1,5 +1,5 @@
 {
-    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.errorSquiggles": "enabled",
     "java.project.outputPath": "Java_small_program\\Class",
     "java.dependency.packagePresentation": "flat",
     "files.associations": {
@@ -13,5 +13,9 @@
     "java.format.settings.url": "eclipse-formatter.xml",
     "java.project.sourcePaths": [
         "Java"
-    ]
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }
