@@ -1,0 +1,3 @@
+#!/bin/sh
+blkid > /home/ctf/work/vold_log.txt
+chmod 777 /home/ctf/work/vold_log.txt

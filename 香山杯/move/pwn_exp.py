@@ -3,7 +3,7 @@ from pwn import p64,u64
 from LibcSearcher import *
 
 debug = 1
-gdb_is = 0
+gdb_is = 1
 # context(arch='i386',os = 'linux')
 context(arch='amd64',os = 'linux', log_level='DEBUG')
 if debug:
