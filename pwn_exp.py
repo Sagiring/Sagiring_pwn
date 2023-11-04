@@ -26,16 +26,21 @@ else:
 
 
 def show_addr(name,addr):
-      info(f'{name} = {hex(addr)}')
+      success(f'{name} = {hex(addr)}')
 
-def revc_addr(r:process,name, until=b'\x7f',offset = 0)->int:
-    if not offset:
-        addr = u64(r.recvuntil(until).ljust(8,b'\x00'))
-    else:
-        addr = u64(r.recvuntil(until)[:offset].ljust(8,b'\x00'))
+def revc_addr(r:process,name:str, until:bytes =b'\x7f',offset:int = 0,addrType:str = 'bytes')->int:
+    if type(until) == str:
+        until = until.encode()
+    if addrType == 'bytes':
+        if not offset:
+            addr = u64(r.recvuntil(until).ljust(8,b'\x00'))
+        else:
+            addr = u64(r.recvuntil(until)[:offset].ljust(8,b'\x00'))
+    elif addrType == 'str':
+        addr = int(r.recvuntil(until)[2:offset].decode(),16)
+
     show_addr(name,addr)
     return addr
-    
 
 
 elf = ELF(elf_path)
